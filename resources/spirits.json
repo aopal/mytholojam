@@ -1,0 +1,62 @@
+{
+  "warrior": {
+    "name": "warrior",
+    "maxHP": 50,
+    "atk": 15,
+    "def": 15,
+    "speed": 5,
+    "moves": [
+      "switch",
+      "strong",
+      "average"
+    ]
+  },
+  "thief": {
+    "name": "thief",
+    "maxHP": 30,
+    "atk": 12,
+    "def": 10,
+    "speed": 15,
+    "moves": [
+      "switch",
+      "weak",
+      "average"
+    ]
+  },
+  "mage": {
+    "name": "mage",
+    "maxHP": 20,
+    "atk": 23,
+    "def": 5,
+    "speed": 10,
+    "moves": [
+      "switch",
+      "overpowered",
+      "puny"
+    ]
+  },
+  "cleric": {
+    "name": "cleric",
+    "maxHP": 70,
+    "atk": 10,
+    "def": 15,
+    "speed": 8,
+    "moves": [
+      "switch",
+      "weak",
+      "puny"
+    ]
+  },
+  "monk": {
+    "name": "monk",
+    "maxHP": 40,
+    "atk": 15,
+    "def": 1,
+    "speed": 20,
+    "moves": [
+      "switch",
+      "overpowered",
+      "average"
+    ]
+  }
+}

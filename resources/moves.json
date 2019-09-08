@@ -1,0 +1,34 @@
+{
+  "switch": {
+    "name": "switch",
+    "power": -1
+  },
+  "overpowered": {
+    "name": "overpowered",
+    "power": 50
+  },
+  "strong": {
+    "name": "strong",
+    "power": 25
+  },
+  "average": {
+    "name": "average",
+    "power": 10
+  },
+  "weak": {
+    "name": "weak",
+    "power": 5
+  },
+  "puny": {
+    "name": "puny",
+    "power": 3
+  },
+  "why would you even bother": {
+    "name": "why would you even bother",
+    "power": 1
+  },
+  "just for the memes": {
+    "name": "just for the memes",
+    "power": 0
+  }
+}

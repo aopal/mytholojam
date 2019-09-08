@@ -1,0 +1,62 @@
+{
+  "sword": {
+    "name": "sword",
+    "maxHP": 50,
+    "atk": 20,
+    "def": 5,
+    "moves": [
+      "strong",
+      "average"
+    ]
+  },
+  "shield": {
+    "name": "shield",
+    "maxHP": 70,
+    "atk": 5,
+    "def": 18,
+    "moves": [
+      "weak",
+      "average"
+    ]
+  },
+  "helmet": {
+    "name": "helmet",
+    "maxHP": 60,
+    "atk": 12,
+    "def": 12,
+    "moves": [
+      "strong",
+      "weak"
+    ]
+  },
+  "breastplate": {
+    "name": "breastplate",
+    "maxHP": 100,
+    "atk": 0,
+    "def": 20,
+    "moves": [
+      "puny",
+      "weak"
+    ]
+  },
+  "bow": {
+    "name": "bow",
+    "maxHP": 80,
+    "atk": 20,
+    "def": 2,
+    "moves": [
+      "overpowered",
+      "why would you even bother"
+    ]
+  },
+  "axe": {
+    "name": "axe",
+    "maxHP": 20,
+    "atk": 25,
+    "def": 3,
+    "moves": [
+      "overpowered",
+      "just for the memes"
+    ]
+  }
+}
