@@ -27,7 +27,7 @@ func main() {
 	r.HandleFunc("/create-game/{gameID}", gameplay.CreateHandler)
 	r.HandleFunc("/join-game/{gameID}", gameplay.JoinHandler)
 	r.HandleFunc("/status/{gameID}/{actionCounter:[0-9]+}", gameplay.StatusHandler)
-	r.HandleFunc("/action/{gameID}", gameplay.ActionHandler)
+	r.HandleFunc("/take-action/{gameID}", gameplay.ActionHandler)
 
 	gameplay.Init()
 

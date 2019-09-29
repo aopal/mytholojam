@@ -1,187 +1,191 @@
 {
-  "gameID": "asdf",
-  "player1Equip": {
-    "23570982-afa2-4e52-9852-f6018e4b13bc": {
-      "id": "23570982-afa2-4e52-9852-f6018e4b13bc",
-      "name": "bow",
-      "hp": 80,
-      "maxHP": 80,
-      "atk": 20,
-      "def": 2,
-      "moves": [{
-        "name": "overpowered",
-        "power": 50
-      }, {
-        "name": "why would you even bother",
-        "power": 1
-      }],
-      "inhabited": false
+  "gameID": "test-game",
+  "player1": {
+    "equipment": {
+      "41b9258d-2aad-4553-94da-5165be23bd1d": {
+        "id": "41b9258d-2aad-4553-94da-5165be23bd1d",
+        "name": "bow",
+        "hp": 80,
+        "maxHP": 80,
+        "atk": 20,
+        "def": 2,
+        "moves": [{
+          "name": "overpowered",
+          "power": 50
+        }, {
+          "name": "why would you even bother",
+          "power": 1
+        }],
+        "inhabited": false
+      },
+      "934af6c5-f4d7-4875-98ad-cd434f0a83be": {
+        "id": "934af6c5-f4d7-4875-98ad-cd434f0a83be",
+        "name": "sword",
+        "hp": 50,
+        "maxHP": 50,
+        "atk": 20,
+        "def": 5,
+        "moves": [{
+          "name": "strong",
+          "power": 25
+        }, {
+          "name": "average",
+          "power": 10
+        }],
+        "inhabited": true
+      },
+      "9d4a75f3-5ced-473c-9bed-1268dda1c8f1": {
+        "id": "9d4a75f3-5ced-473c-9bed-1268dda1c8f1",
+        "name": "shield",
+        "hp": 70,
+        "maxHP": 70,
+        "atk": 5,
+        "def": 18,
+        "moves": [{
+          "name": "weak",
+          "power": 5
+        }, {
+          "name": "average",
+          "power": 10
+        }],
+        "inhabited": true
+      }
     },
-    "2bf330f6-7ed7-4e2f-b865-61b15dbab80a": {
-      "id": "2bf330f6-7ed7-4e2f-b865-61b15dbab80a",
-      "name": "sword",
-      "hp": 50,
-      "maxHP": 50,
-      "atk": 20,
-      "def": 5,
-      "moves": [{
-        "name": "strong",
-        "power": 25
-      }, {
-        "name": "average",
-        "power": 10
-      }],
-      "inhabited": true
-    },
-    "f0f1eede-7f91-4de1-92a8-fba857bab586": {
-      "id": "23570982-afa2-4e52-9852-f6018e4b13bc",
-      "name": "bow",
-      "hp": 80,
-      "maxHP": 80,
-      "atk": 20,
-      "def": 2,
-      "moves": [{
-        "name": "overpowered",
-        "power": 50
-      }, {
-        "name": "why would you even bother",
-        "power": 1
-      }],
-      "inhabited": false
+    "spirits": {
+      "3f21ad00-9cb4-4a2d-b5cf-bc01bb46a8ba": {
+        "id": "3f21ad00-9cb4-4a2d-b5cf-bc01bb46a8ba",
+        "hp": 50,
+        "name": "warrior",
+        "maxHP": 50,
+        "atk": 15,
+        "def": 15,
+        "Speed": 5,
+        "moves": [{
+          "name": "switch",
+          "power": -1
+        }, {
+          "name": "strong",
+          "power": 25
+        }, {
+          "name": "average",
+          "power": 10
+        }],
+        "inhabiting": "934af6c5-f4d7-4875-98ad-cd434f0a83be"
+      },
+      "ee3b85a3-ad3e-4f0c-8841-aa6521a810f2": {
+        "id": "ee3b85a3-ad3e-4f0c-8841-aa6521a810f2",
+        "hp": 70,
+        "name": "cleric",
+        "maxHP": 70,
+        "atk": 10,
+        "def": 15,
+        "Speed": 8,
+        "moves": [{
+          "name": "switch",
+          "power": -1
+        }, {
+          "name": "weak",
+          "power": 5
+        }, {
+          "name": "puny",
+          "power": 3
+        }],
+        "inhabiting": "9d4a75f3-5ced-473c-9bed-1268dda1c8f1"
+      }
     }
   },
-  "player2Equip": {
-    "45358816-19b5-4ec9-ba2b-a27c1fe9fa0c": {
-      "id": "45358816-19b5-4ec9-ba2b-a27c1fe9fa0c",
-      "name": "helmet",
-      "hp": 60,
-      "maxHP": 60,
-      "atk": 12,
-      "def": 12,
-      "moves": [{
-        "name": "strong",
-        "power": 25
-      }, {
-        "name": "weak",
-        "power": 5
-      }],
-      "inhabited": true
+  "player2": {
+    "equipment": {
+      "0b034d07-05b2-4fca-8635-29bfbc489bd3": {
+        "id": "0b034d07-05b2-4fca-8635-29bfbc489bd3",
+        "name": "axe",
+        "hp": 20,
+        "maxHP": 20,
+        "atk": 25,
+        "def": 3,
+        "moves": [{
+          "name": "overpowered",
+          "power": 50
+        }, {
+          "name": "just for the memes",
+          "power": 0
+        }],
+        "inhabited": true
+      },
+      "21cb7976-7148-4c94-a1d1-627645236b25": {
+        "id": "21cb7976-7148-4c94-a1d1-627645236b25",
+        "name": "helmet",
+        "hp": 60,
+        "maxHP": 60,
+        "atk": 12,
+        "def": 12,
+        "moves": [{
+          "name": "strong",
+          "power": 25
+        }, {
+          "name": "weak",
+          "power": 5
+        }],
+        "inhabited": true
+      },
+      "bf9718fd-ff4e-49d4-9485-cb32837c6cd0": {
+        "id": "bf9718fd-ff4e-49d4-9485-cb32837c6cd0",
+        "name": "breastplate",
+        "hp": 100,
+        "maxHP": 100,
+        "atk": 0,
+        "def": 20,
+        "moves": [{
+          "name": "puny",
+          "power": 3
+        }, {
+          "name": "weak",
+          "power": 5
+        }],
+        "inhabited": false
+      }
     },
-    "622472eb-4c81-4d9c-8cc3-03f37e95e1c5": {
-      "id": "d0e005ad-9c2f-4825-8a18-9bbe00bb241f",
-      "name": "axe",
-      "hp": 20,
-      "maxHP": 20,
-      "atk": 25,
-      "def": 3,
-      "moves": [{
-        "name": "overpowered",
-        "power": 50
-      }, {
-        "name": "just for the memes",
-        "power": 0
-      }],
-      "inhabited": true
-    },
-    "d0e005ad-9c2f-4825-8a18-9bbe00bb241f": {
-      "id": "d0e005ad-9c2f-4825-8a18-9bbe00bb241f",
-      "name": "axe",
-      "hp": 20,
-      "maxHP": 20,
-      "atk": 25,
-      "def": 3,
-      "moves": [{
-        "name": "overpowered",
-        "power": 50
-      }, {
-        "name": "just for the memes",
-        "power": 0
-      }],
-      "inhabited": true
-    }
-  },
-  "player1Spirits": {
-    "20257bb2-5ce8-4119-87cb-82fc82cdf910": {
-      "id": "20257bb2-5ce8-4119-87cb-82fc82cdf910",
-      "hp": 50,
-      "name": "warrior",
-      "maxHP": 50,
-      "atk": 15,
-      "def": 15,
-      "Speed": 5,
-      "moves": [{
-        "name": "switch",
-        "power": -1
-      }, {
-        "name": "strong",
-        "power": 25
-      }, {
-        "name": "average",
-        "power": 10
-      }],
-      "inhabiting": "2bf330f6-7ed7-4e2f-b865-61b15dbab80a"
-    },
-    "2edbb45d-8289-4050-97fb-caaa0b1012a2": {
-      "id": "2edbb45d-8289-4050-97fb-caaa0b1012a2",
-      "hp": 70,
-      "name": "cleric",
-      "maxHP": 70,
-      "atk": 10,
-      "def": 15,
-      "Speed": 8,
-      "moves": [{
-        "name": "switch",
-        "power": -1
-      }, {
-        "name": "weak",
-        "power": 5
-      }, {
-        "name": "puny",
-        "power": 3
-      }],
-      "inhabiting": "f0f1eede-7f91-4de1-92a8-fba857bab586"
-    }
-  },
-  "player2Spirits": {
-    "dd4b3143-fdff-4bcd-aca8-a9c1123bd339": {
-      "id": "dd4b3143-fdff-4bcd-aca8-a9c1123bd339",
-      "hp": 30,
-      "name": "thief",
-      "maxHP": 30,
-      "atk": 12,
-      "def": 10,
-      "Speed": 15,
-      "moves": [{
-        "name": "switch",
-        "power": -1
-      }, {
-        "name": "weak",
-        "power": 5
-      }, {
-        "name": "average",
-        "power": 10
-      }],
-      "inhabiting": "d0e005ad-9c2f-4825-8a18-9bbe00bb241f"
-    },
-    "f82f67a8-4c0b-4455-9e3d-67ba94b64a54": {
-      "id": "f82f67a8-4c0b-4455-9e3d-67ba94b64a54",
-      "hp": 20,
-      "name": "mage",
-      "maxHP": 20,
-      "atk": 23,
-      "def": 5,
-      "Speed": 10,
-      "moves": [{
-        "name": "switch",
-        "power": -1
-      }, {
-        "name": "overpowered",
-        "power": 50
-      }, {
-        "name": "puny",
-        "power": 3
-      }],
-      "inhabiting": "45358816-19b5-4ec9-ba2b-a27c1fe9fa0c"
+    "spirits": {
+      "a657a980-10ad-4051-98e6-0e01ed1fffe8": {
+        "id": "a657a980-10ad-4051-98e6-0e01ed1fffe8",
+        "hp": 20,
+        "name": "mage",
+        "maxHP": 20,
+        "atk": 23,
+        "def": 5,
+        "Speed": 10,
+        "moves": [{
+          "name": "switch",
+          "power": -1
+        }, {
+          "name": "overpowered",
+          "power": 50
+        }, {
+          "name": "puny",
+          "power": 3
+        }],
+        "inhabiting": "21cb7976-7148-4c94-a1d1-627645236b25"
+      },
+      "de602421-d9c8-4891-9e08-257e580fd954": {
+        "id": "de602421-d9c8-4891-9e08-257e580fd954",
+        "hp": 30,
+        "name": "thief",
+        "maxHP": 30,
+        "atk": 12,
+        "def": 10,
+        "Speed": 15,
+        "moves": [{
+          "name": "switch",
+          "power": -1
+        }, {
+          "name": "weak",
+          "power": 5
+        }, {
+          "name": "average",
+          "power": 10
+        }],
+        "inhabiting": "0b034d07-05b2-4fca-8635-29bfbc489bd3"
+      }
     }
   },
   "numActions": 0,

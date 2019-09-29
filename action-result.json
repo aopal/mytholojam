@@ -1,0 +1,649 @@
+{
+  "gameID": "asdf",
+  "player1": {
+    "equipment": {
+      "ab71ae00-f1b9-43b0-b9c8-534222c0633d": {
+        "id": "ab71ae00-f1b9-43b0-b9c8-534222c0633d",
+        "name": "shield",
+        "hp": 4,
+        "maxHP": 4,
+        "atk": 5,
+        "defenses": {
+          "type1": 1,
+          "type2": 2,
+          "type3": 3,
+          "type4": 4
+        },
+        "moves": [{
+          "name": "weak",
+          "power": 5,
+          "type": "type3",
+          "priority": 0,
+          "multiTarget": true,
+          "teamTargetable": "other"
+        }, {
+          "name": "average",
+          "power": 10,
+          "type": "type2",
+          "priority": 0,
+          "multiTarget": false,
+          "teamTargetable": "other"
+        }],
+        "inhabited": true,
+        "inhabitedBy": "6d3853d8-fffb-492c-98ac-b849b447abc4"
+      },
+      "cf8485fc-859a-498c-b7e5-5012c9cff328": {
+        "id": "cf8485fc-859a-498c-b7e5-5012c9cff328",
+        "name": "bow",
+        "hp": 2,
+        "maxHP": 2,
+        "atk": 20,
+        "defenses": {
+          "type1": 1,
+          "type2": 2,
+          "type3": 3,
+          "type4": 4
+        },
+        "moves": [{
+          "name": "overpowered",
+          "power": 50,
+          "type": "type1",
+          "priority": 0,
+          "multiTarget": false,
+          "teamTargetable": "other"
+        }, {
+          "name": "why would you even bother",
+          "power": 1,
+          "type": "type4",
+          "priority": 2,
+          "multiTarget": false,
+          "teamTargetable": "other"
+        }],
+        "inhabited": true,
+        "inhabitedBy": "8bfd5081-7dd0-4d76-a726-c7b60497967d"
+      },
+      "dd6575b1-1b5a-4488-b939-d92185b6256c": {
+        "id": "dd6575b1-1b5a-4488-b939-d92185b6256c",
+        "name": "sword",
+        "hp": -17,
+        "maxHP": 3,
+        "atk": 20,
+        "defenses": {
+          "type1": 1,
+          "type2": 2,
+          "type3": 3,
+          "type4": 4
+        },
+        "moves": [{
+          "name": "strong",
+          "power": 25,
+          "type": "type1",
+          "priority": 0,
+          "multiTarget": false,
+          "teamTargetable": "other"
+        }, {
+          "name": "average",
+          "power": 10,
+          "type": "type2",
+          "priority": 0,
+          "multiTarget": false,
+          "teamTargetable": "other"
+        }],
+        "inhabited": false,
+        "inhabitedBy": ""
+      }
+    },
+    "spirits": {
+      "6d3853d8-fffb-492c-98ac-b849b447abc4": {
+        "id": "6d3853d8-fffb-492c-98ac-b849b447abc4",
+        "hp": -69,
+        "name": "cleric",
+        "maxHP": 3,
+        "atk": 10,
+        "defenses": {
+          "type1": 1,
+          "type2": 2,
+          "type3": 3,
+          "type4": 4
+        },
+        "Speed": 8,
+        "moves": [{
+          "name": "switch",
+          "power": -1,
+          "type": "switch",
+          "priority": 100,
+          "multiTarget": false,
+          "teamTargetable": "self"
+        }, {
+          "name": "weak",
+          "power": 5,
+          "type": "type3",
+          "priority": 0,
+          "multiTarget": true,
+          "teamTargetable": "other"
+        }, {
+          "name": "puny",
+          "power": 3,
+          "type": "type3",
+          "priority": 0,
+          "multiTarget": false,
+          "teamTargetable": "other"
+        }],
+        "inhabiting": "ab71ae00-f1b9-43b0-b9c8-534222c0633d"
+      },
+      "8bfd5081-7dd0-4d76-a726-c7b60497967d": {
+        "id": "8bfd5081-7dd0-4d76-a726-c7b60497967d",
+        "hp": 5,
+        "name": "warrior",
+        "maxHP": 5,
+        "atk": 15,
+        "defenses": {
+          "type1": 1,
+          "type2": 2,
+          "type3": 3,
+          "type4": 4
+        },
+        "Speed": 5,
+        "moves": [{
+          "name": "switch",
+          "power": -1,
+          "type": "switch",
+          "priority": 100,
+          "multiTarget": false,
+          "teamTargetable": "self"
+        }, {
+          "name": "strong",
+          "power": 25,
+          "type": "type1",
+          "priority": 0,
+          "multiTarget": false,
+          "teamTargetable": "other"
+        }, {
+          "name": "average",
+          "power": 10,
+          "type": "type2",
+          "priority": 0,
+          "multiTarget": false,
+          "teamTargetable": "other"
+        }],
+        "inhabiting": "cf8485fc-859a-498c-b7e5-5012c9cff328"
+      }
+    }
+  },
+  "player2": {
+    "equipment": {
+      "3a2c5b71-db2f-4b5a-bd4c-52a5f3250ea1": {
+        "id": "3a2c5b71-db2f-4b5a-bd4c-52a5f3250ea1",
+        "name": "helmet",
+        "hp": 3,
+        "maxHP": 3,
+        "atk": 12,
+        "defenses": {
+          "type1": 1,
+          "type2": 2,
+          "type3": 3,
+          "type4": 4
+        },
+        "moves": [{
+          "name": "strong",
+          "power": 25,
+          "type": "type1",
+          "priority": 0,
+          "multiTarget": false,
+          "teamTargetable": "other"
+        }, {
+          "name": "weak",
+          "power": 5,
+          "type": "type3",
+          "priority": 0,
+          "multiTarget": true,
+          "teamTargetable": "other"
+        }],
+        "inhabited": true,
+        "inhabitedBy": "ddb8c6cc-bd62-4033-b583-14f4a6d1fe28"
+      },
+      "e2a8f993-9b2b-427e-b6ff-e34f148801d4": {
+        "id": "e2a8f993-9b2b-427e-b6ff-e34f148801d4",
+        "name": "breastplate",
+        "hp": -8,
+        "maxHP": 4,
+        "atk": 0,
+        "defenses": {
+          "type1": 1,
+          "type2": 2,
+          "type3": 3,
+          "type4": 4
+        },
+        "moves": [{
+          "name": "puny",
+          "power": 3,
+          "type": "type3",
+          "priority": 0,
+          "multiTarget": false,
+          "teamTargetable": "other"
+        }, {
+          "name": "weak",
+          "power": 5,
+          "type": "type3",
+          "priority": 0,
+          "multiTarget": true,
+          "teamTargetable": "other"
+        }],
+        "inhabited": false,
+        "inhabitedBy": ""
+      },
+      "f714d4bd-fedb-468a-be86-f24546dc15c1": {
+        "id": "f714d4bd-fedb-468a-be86-f24546dc15c1",
+        "name": "axe",
+        "hp": 2,
+        "maxHP": 2,
+        "atk": 25,
+        "defenses": {
+          "type1": 1,
+          "type2": 2,
+          "type3": 3,
+          "type4": 4
+        },
+        "moves": [{
+          "name": "overpowered",
+          "power": 50,
+          "type": "type1",
+          "priority": 0,
+          "multiTarget": false,
+          "teamTargetable": "other"
+        }, {
+          "name": "just for the memes",
+          "power": 0,
+          "type": "type4",
+          "priority": 1,
+          "multiTarget": true,
+          "teamTargetable": "other"
+        }],
+        "inhabited": true,
+        "inhabitedBy": "e7dde1bf-0f4c-4b13-8c30-1c0e18c0458c"
+      }
+    },
+    "spirits": {
+      "ddb8c6cc-bd62-4033-b583-14f4a6d1fe28": {
+        "id": "ddb8c6cc-bd62-4033-b583-14f4a6d1fe28",
+        "hp": 2,
+        "name": "mage",
+        "maxHP": 2,
+        "atk": 23,
+        "defenses": {
+          "type1": 1,
+          "type2": 2,
+          "type3": 3,
+          "type4": 4
+        },
+        "Speed": 10,
+        "moves": [{
+          "name": "switch",
+          "power": -1,
+          "type": "switch",
+          "priority": 100,
+          "multiTarget": false,
+          "teamTargetable": "self"
+        }, {
+          "name": "overpowered",
+          "power": 50,
+          "type": "type1",
+          "priority": 0,
+          "multiTarget": false,
+          "teamTargetable": "other"
+        }, {
+          "name": "puny",
+          "power": 3,
+          "type": "type3",
+          "priority": 0,
+          "multiTarget": false,
+          "teamTargetable": "other"
+        }],
+        "inhabiting": "3a2c5b71-db2f-4b5a-bd4c-52a5f3250ea1"
+      },
+      "e7dde1bf-0f4c-4b13-8c30-1c0e18c0458c": {
+        "id": "e7dde1bf-0f4c-4b13-8c30-1c0e18c0458c",
+        "hp": 3,
+        "name": "thief",
+        "maxHP": 3,
+        "atk": 12,
+        "defenses": {
+          "type1": 1,
+          "type2": 2,
+          "type3": 3,
+          "type4": 4
+        },
+        "Speed": 15,
+        "moves": [{
+          "name": "switch",
+          "power": -1,
+          "type": "switch",
+          "priority": 100,
+          "multiTarget": false,
+          "teamTargetable": "self"
+        }, {
+          "name": "weak",
+          "power": 5,
+          "type": "type3",
+          "priority": 0,
+          "multiTarget": true,
+          "teamTargetable": "other"
+        }, {
+          "name": "average",
+          "power": 10,
+          "type": "type2",
+          "priority": 0,
+          "multiTarget": false,
+          "teamTargetable": "other"
+        }],
+        "inhabiting": "f714d4bd-fedb-468a-be86-f24546dc15c1"
+      }
+    }
+  },
+  "numActions": 4,
+  "newActions": [{
+    "user": {
+      "id": "8bfd5081-7dd0-4d76-a726-c7b60497967d",
+      "hp": 5,
+      "name": "warrior",
+      "maxHP": 5,
+      "atk": 15,
+      "defenses": {
+        "type1": 1,
+        "type2": 2,
+        "type3": 3,
+        "type4": 4
+      },
+      "Speed": 5,
+      "moves": [{
+        "name": "switch",
+        "power": -1,
+        "type": "switch",
+        "priority": 100,
+        "multiTarget": false,
+        "teamTargetable": "self"
+      }, {
+        "name": "strong",
+        "power": 25,
+        "type": "type1",
+        "priority": 0,
+        "multiTarget": false,
+        "teamTargetable": "other"
+      }, {
+        "name": "average",
+        "power": 10,
+        "type": "type2",
+        "priority": 0,
+        "multiTarget": false,
+        "teamTargetable": "other"
+      }],
+      "inhabiting": "cf8485fc-859a-498c-b7e5-5012c9cff328"
+    },
+    "targets": [{
+      "id": "cf8485fc-859a-498c-b7e5-5012c9cff328",
+      "name": "bow",
+      "hp": 2,
+      "maxHP": 2,
+      "atk": 20,
+      "defenses": {
+        "type1": 1,
+        "type2": 2,
+        "type3": 3,
+        "type4": 4
+      },
+      "moves": [{
+        "name": "overpowered",
+        "power": 50,
+        "type": "type1",
+        "priority": 0,
+        "multiTarget": false,
+        "teamTargetable": "other"
+      }, {
+        "name": "why would you even bother",
+        "power": 1,
+        "type": "type4",
+        "priority": 2,
+        "multiTarget": false,
+        "teamTargetable": "other"
+      }],
+      "inhabited": true,
+      "inhabitedBy": "8bfd5081-7dd0-4d76-a726-c7b60497967d"
+    }],
+    "move": {
+      "name": "switch",
+      "power": -1,
+      "type": "switch",
+      "priority": 100,
+      "multiTarget": false,
+      "teamTargetable": "self"
+    }
+  }, {
+    "user": {
+      "id": "e7dde1bf-0f4c-4b13-8c30-1c0e18c0458c",
+      "hp": 3,
+      "name": "thief",
+      "maxHP": 3,
+      "atk": 12,
+      "defenses": {
+        "type1": 1,
+        "type2": 2,
+        "type3": 3,
+        "type4": 4
+      },
+      "Speed": 15,
+      "moves": [{
+        "name": "switch",
+        "power": -1,
+        "type": "switch",
+        "priority": 100,
+        "multiTarget": false,
+        "teamTargetable": "self"
+      }, {
+        "name": "weak",
+        "power": 5,
+        "type": "type3",
+        "priority": 0,
+        "multiTarget": true,
+        "teamTargetable": "other"
+      }, {
+        "name": "average",
+        "power": 10,
+        "type": "type2",
+        "priority": 0,
+        "multiTarget": false,
+        "teamTargetable": "other"
+      }],
+      "inhabiting": "f714d4bd-fedb-468a-be86-f24546dc15c1"
+    },
+    "targets": [{
+      "id": "dd6575b1-1b5a-4488-b939-d92185b6256c",
+      "name": "sword",
+      "hp": -17,
+      "maxHP": 3,
+      "atk": 20,
+      "defenses": {
+        "type1": 1,
+        "type2": 2,
+        "type3": 3,
+        "type4": 4
+      },
+      "moves": [{
+        "name": "strong",
+        "power": 25,
+        "type": "type1",
+        "priority": 0,
+        "multiTarget": false,
+        "teamTargetable": "other"
+      }, {
+        "name": "average",
+        "power": 10,
+        "type": "type2",
+        "priority": 0,
+        "multiTarget": false,
+        "teamTargetable": "other"
+      }],
+      "inhabited": false,
+      "inhabitedBy": ""
+    }],
+    "move": {
+      "name": "average",
+      "power": 10,
+      "type": "type2",
+      "priority": 0,
+      "multiTarget": false,
+      "teamTargetable": "other"
+    }
+  }, {
+    "user": {
+      "id": "ddb8c6cc-bd62-4033-b583-14f4a6d1fe28",
+      "hp": 2,
+      "name": "mage",
+      "maxHP": 2,
+      "atk": 23,
+      "defenses": {
+        "type1": 1,
+        "type2": 2,
+        "type3": 3,
+        "type4": 4
+      },
+      "Speed": 10,
+      "moves": [{
+        "name": "switch",
+        "power": -1,
+        "type": "switch",
+        "priority": 100,
+        "multiTarget": false,
+        "teamTargetable": "self"
+      }, {
+        "name": "overpowered",
+        "power": 50,
+        "type": "type1",
+        "priority": 0,
+        "multiTarget": false,
+        "teamTargetable": "other"
+      }, {
+        "name": "puny",
+        "power": 3,
+        "type": "type3",
+        "priority": 0,
+        "multiTarget": false,
+        "teamTargetable": "other"
+      }],
+      "inhabiting": "3a2c5b71-db2f-4b5a-bd4c-52a5f3250ea1"
+    },
+    "targets": [{
+      "id": "ab71ae00-f1b9-43b0-b9c8-534222c0633d",
+      "name": "shield",
+      "hp": 4,
+      "maxHP": 4,
+      "atk": 5,
+      "defenses": {
+        "type1": 1,
+        "type2": 2,
+        "type3": 3,
+        "type4": 4
+      },
+      "moves": [{
+        "name": "weak",
+        "power": 5,
+        "type": "type3",
+        "priority": 0,
+        "multiTarget": true,
+        "teamTargetable": "other"
+      }, {
+        "name": "average",
+        "power": 10,
+        "type": "type2",
+        "priority": 0,
+        "multiTarget": false,
+        "teamTargetable": "other"
+      }],
+      "inhabited": true,
+      "inhabitedBy": "6d3853d8-fffb-492c-98ac-b849b447abc4"
+    }],
+    "move": {
+      "name": "overpowered",
+      "power": 50,
+      "type": "type1",
+      "priority": 0,
+      "multiTarget": false,
+      "teamTargetable": "other"
+    }
+  }, {
+    "user": {
+      "id": "6d3853d8-fffb-492c-98ac-b849b447abc4",
+      "hp": -69,
+      "name": "cleric",
+      "maxHP": 3,
+      "atk": 10,
+      "defenses": {
+        "type1": 1,
+        "type2": 2,
+        "type3": 3,
+        "type4": 4
+      },
+      "Speed": 8,
+      "moves": [{
+        "name": "switch",
+        "power": -1,
+        "type": "switch",
+        "priority": 100,
+        "multiTarget": false,
+        "teamTargetable": "self"
+      }, {
+        "name": "weak",
+        "power": 5,
+        "type": "type3",
+        "priority": 0,
+        "multiTarget": true,
+        "teamTargetable": "other"
+      }, {
+        "name": "puny",
+        "power": 3,
+        "type": "type3",
+        "priority": 0,
+        "multiTarget": false,
+        "teamTargetable": "other"
+      }],
+      "inhabiting": "ab71ae00-f1b9-43b0-b9c8-534222c0633d"
+    },
+    "targets": [{
+      "id": "e2a8f993-9b2b-427e-b6ff-e34f148801d4",
+      "name": "breastplate",
+      "hp": -8,
+      "maxHP": 4,
+      "atk": 0,
+      "defenses": {
+        "type1": 1,
+        "type2": 2,
+        "type3": 3,
+        "type4": 4
+      },
+      "moves": [{
+        "name": "puny",
+        "power": 3,
+        "type": "type3",
+        "priority": 0,
+        "multiTarget": false,
+        "teamTargetable": "other"
+      }, {
+        "name": "weak",
+        "power": 5,
+        "type": "type3",
+        "priority": 0,
+        "multiTarget": true,
+        "teamTargetable": "other"
+      }],
+      "inhabited": false,
+      "inhabitedBy": ""
+    }],
+    "move": {
+      "name": "weak",
+      "power": 5,
+      "type": "type3",
+      "priority": 0,
+      "multiTarget": true,
+      "teamTargetable": "other"
+    }
+  }]
+}

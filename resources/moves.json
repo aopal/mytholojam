@@ -1,34 +1,66 @@
 {
   "switch": {
     "name": "switch",
-    "power": -1
+    "power": -1,
+    "type": "switch",
+    "priority": 100,
+    "multiTarget": false,
+    "teamTargetable": "self"
   },
   "overpowered": {
     "name": "overpowered",
-    "power": 50
+    "power": 50,
+    "type": "type1",
+    "priority": 0,
+    "multiTarget": false,
+    "teamTargetable": "other"
   },
   "strong": {
     "name": "strong",
-    "power": 25
+    "power": 25,
+    "type": "type1",
+    "priority": 0,
+    "multiTarget": false,
+    "teamTargetable": "other"
   },
   "average": {
     "name": "average",
-    "power": 10
+    "power": 10,
+    "type": "type2",
+    "priority": 0,
+    "multiTarget": false,
+    "teamTargetable": "other"
   },
   "weak": {
     "name": "weak",
-    "power": 5
+    "power": 5,
+    "type": "type3",
+    "priority": 0,
+    "multiTarget": true,
+    "teamTargetable": "other"
   },
   "puny": {
     "name": "puny",
-    "power": 3
+    "power": 3,
+    "type": "type3",
+    "priority": 0,
+    "multiTarget": false,
+    "teamTargetable": "other"
   },
   "why would you even bother": {
     "name": "why would you even bother",
-    "power": 1
+    "power": 1,
+    "type": "type4",
+    "priority": 2,
+    "multiTarget": false,
+    "teamTargetable": "other"
   },
   "just for the memes": {
     "name": "just for the memes",
-    "power": 0
+    "power": 0,
+    "type": "type4",
+    "priority": 1,
+    "multiTarget": true,
+    "teamTargetable": "other"
   }
 }

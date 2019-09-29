@@ -1,9 +1,14 @@
 {
   "warrior": {
     "name": "warrior",
-    "maxHP": 50,
+    "maxHP": 5,
     "atk": 15,
-    "def": 15,
+    "defenses": {
+      "type1": 1,
+      "type2": 2,
+      "type3": 3,
+      "type4": 4
+    },
     "speed": 5,
     "moves": [
       "switch",
@@ -13,9 +18,14 @@
   },
   "thief": {
     "name": "thief",
-    "maxHP": 30,
+    "maxHP": 3,
     "atk": 12,
-    "def": 10,
+    "defenses": {
+      "type1": 1,
+      "type2": 2,
+      "type3": 3,
+      "type4": 4
+    },
     "speed": 15,
     "moves": [
       "switch",
@@ -25,9 +35,14 @@
   },
   "mage": {
     "name": "mage",
-    "maxHP": 20,
+    "maxHP": 2,
     "atk": 23,
-    "def": 5,
+    "defenses": {
+      "type1": 1,
+      "type2": 2,
+      "type3": 3,
+      "type4": 4
+    },
     "speed": 10,
     "moves": [
       "switch",
@@ -37,9 +52,14 @@
   },
   "cleric": {
     "name": "cleric",
-    "maxHP": 70,
+    "maxHP": 3,
     "atk": 10,
-    "def": 15,
+    "defenses": {
+      "type1": 1,
+      "type2": 2,
+      "type3": 3,
+      "type4": 4
+    },
     "speed": 8,
     "moves": [
       "switch",
@@ -49,9 +69,14 @@
   },
   "monk": {
     "name": "monk",
-    "maxHP": 40,
+    "maxHP": 4,
     "atk": 15,
-    "def": 1,
+    "defenses": {
+      "type1": 1,
+      "type2": 2,
+      "type3": 3,
+      "type4": 4
+    },
     "speed": 20,
     "moves": [
       "switch",

@@ -2,25 +2,17 @@ package gameplay
 
 import (
 	"encoding/json"
-	"errors"
 	"io/ioutil"
-	"log"
-	"net/http"
-	"strconv"
-
-	"github.com/google/uuid"
-	"github.com/gorilla/mux"
+	"sync"
 )
 
-type targetable interface {
-	getID() string
-}
-
 var gameList map[string]*game
+var glLock sync.RWMutex
 var bufferSize int
 var moveList map[string]*move
 var equipList map[string]*equipmentTemplate
 var spiritList map[string]*spiritTemplate
+var types []string
 
 func Init() {
 	gameList = make(map[string]*game)
@@ -28,11 +20,8 @@ func Init() {
 	moveList = make(map[string]*move)
 	equipList = make(map[string]*equipmentTemplate)
 	spiritList = make(map[string]*spiritTemplate)
+	types = []string{"type1", "type2", "type3", "type4"}
 
-	loadResources()
-}
-
-func loadResources() {
 	moveF, _ := ioutil.ReadFile("resources/moves.json")
 	equipF, _ := ioutil.ReadFile("resources/equipment.json")
 	spiritF, _ := ioutil.ReadFile("resources/spirits.json")
@@ -40,123 +29,9 @@ func loadResources() {
 	_ = json.Unmarshal([]byte(moveF), &moveList)
 	_ = json.Unmarshal([]byte(equipF), &equipList)
 	_ = json.Unmarshal([]byte(spiritF), &spiritList)
-
-	// t, _ := json.Marshal(moveList)
-	// fmt.Println(string(t), moveList["average"])
-
-	// t2, _ := json.Marshal(spiritList)
-	// fmt.Println(string(t2), spiritList["warrior"])
-
-	// t3, _ := json.Marshal(equipList)
-	// fmt.Println(string(t3), equipList["bow"])
 }
 
-func CreateHandler(w http.ResponseWriter, r *http.Request) {
-	log.Printf("Create request received")
-
-	vars := mux.Vars(r)
-	gameID := vars["gameID"]
-
-	if _, ok := gameList[gameID]; ok {
-		w.WriteHeader(400)
-		w.Write([]byte("A game with that ID already exists.\n"))
-		return
-	}
-
-	g, err, code := createGame(gameID)
-
-	if err != nil {
-		w.WriteHeader(code)
-		w.Write([]byte(err.Error()))
-	} else {
-		w.Write([]byte(g.player1Token))
-	}
-}
-
-func JoinHandler(w http.ResponseWriter, r *http.Request) {
-	log.Printf("Join request received")
-
-	vars := mux.Vars(r)
-	gameID := vars["gameID"]
-
-	if _, ok := gameList[gameID]; !ok {
-		w.WriteHeader(400)
-		w.Write([]byte("No game with that ID exists.\n"))
-		return
-	}
-
-	g := gameList[gameID]
-	g.lock.Lock()
-	defer g.lock.Unlock()
-
-	err, code := joinGame(g)
-
-	if err != nil {
-		w.WriteHeader(code)
-		w.Write([]byte(err.Error()))
-	} else {
-		w.Write([]byte(g.player2Token))
-	}
-}
-
-func StatusHandler(w http.ResponseWriter, r *http.Request) {
-	log.Printf("Status request received")
-
-	vars := mux.Vars(r)
-	gameID := vars["gameID"]
-	numActionsSeen, _ := strconv.Atoi(vars["actionCounter"])
-
-	if _, ok := gameList[gameID]; !ok {
-		w.WriteHeader(400)
-		w.Write([]byte("No game with that ID exists.\n"))
-		return
-	}
-
-	g := gameList[gameID]
-	g.lock.Lock()
-	defer g.lock.Unlock()
-
-	status, err, code := getStatus(g, numActionsSeen)
-
-	if err != nil {
-		w.WriteHeader(code)
-		w.Write([]byte(err.Error()))
-	} else {
-		w.Write([]byte(status))
-	}
-}
-
-func ActionHandler(w http.ResponseWriter, r *http.Request) {
-	log.Printf("Action request received")
-
-	vars := mux.Vars(r)
-	gameID := vars["gameID"]
-
-	if _, ok := gameList[gameID]; !ok {
-		w.WriteHeader(400)
-		w.Write([]byte("No game with that ID exists.\n"))
-		return
-	}
-
-	g := gameList[gameID]
-	g.lock.Lock()
-	defer g.lock.Unlock()
-
-	w.Write([]byte(""))
-}
-
-func createGame(gameID string) (*game, error, int) {
-	player1Token, err := uuid.NewRandom()
-	if err != nil {
-		return nil, errors.New("Could not create game.\n"), 500
-	}
-
-	g := game{player1Token: player1Token.String(), GameID: gameID}
-	gameList[gameID] = &g
-
-	g.Player1Equip = make(map[string]*equipment)
-	g.Player1Spirits = make(map[string]*spirit)
-
+func initializeDummyPlayer1(p *player) {
 	e1 := equipList["sword"].NewEquipment()
 	e2 := equipList["shield"].NewEquipment()
 	e3 := equipList["bow"].NewEquipment()
@@ -164,34 +39,25 @@ func createGame(gameID string) (*game, error, int) {
 	s1 := spiritList["warrior"].NewSpirit()
 	s2 := spiritList["cleric"].NewSpirit()
 
-	g.Player1Equip[e1.ID] = e1
-	g.Player1Equip[e2.ID] = e3
-	g.Player1Equip[e3.ID] = e3
+	e1.ID = "dd6575b1-1b5a-4488-b939-d92185b6256c"
+	e2.ID = "ab71ae00-f1b9-43b0-b9c8-534222c0633d"
+	e3.ID = "cf8485fc-859a-498c-b7e5-5012c9cff328"
 
-	g.Player1Spirits[s1.ID] = s1
-	g.Player1Spirits[s2.ID] = s2
+	s1.ID = "8bfd5081-7dd0-4d76-a726-c7b60497967d"
+	s2.ID = "6d3853d8-fffb-492c-98ac-b849b447abc4"
+
+	p.Equipment[e1.ID] = e1
+	p.Equipment[e2.ID] = e2
+	p.Equipment[e3.ID] = e3
+
+	p.Spirits[s1.ID] = s1
+	p.Spirits[s2.ID] = s2
 
 	s1.Inhabit(e1)
 	s2.Inhabit(e2)
-
-	return &g, nil, 200
 }
 
-func joinGame(g *game) (error, int) {
-	if g.player2Token != "" {
-		return errors.New("Game already full.\n"), 400
-	}
-
-	player2Token, err := uuid.NewRandom()
-	if err != nil {
-		return errors.New("Could not join game.\n"), 500
-	}
-
-	g.player2Token = player2Token.String()
-
-	g.Player2Equip = make(map[string]*equipment)
-	g.Player2Spirits = make(map[string]*spirit)
-
+func initializeDummyPlayer2(p *player) {
 	e1 := equipList["helmet"].NewEquipment()
 	e2 := equipList["breastplate"].NewEquipment()
 	e3 := equipList["axe"].NewEquipment()
@@ -199,28 +65,20 @@ func joinGame(g *game) (error, int) {
 	s1 := spiritList["thief"].NewSpirit()
 	s2 := spiritList["mage"].NewSpirit()
 
-	g.Player2Equip[e1.ID] = e1
-	g.Player2Equip[e2.ID] = e3
-	g.Player2Equip[e3.ID] = e3
+	e1.ID = "3a2c5b71-db2f-4b5a-bd4c-52a5f3250ea1"
+	e2.ID = "e2a8f993-9b2b-427e-b6ff-e34f148801d4"
+	e3.ID = "f714d4bd-fedb-468a-be86-f24546dc15c1"
 
-	g.Player2Spirits[s1.ID] = s1
-	g.Player2Spirits[s2.ID] = s2
+	s1.ID = "e7dde1bf-0f4c-4b13-8c30-1c0e18c0458c"
+	s2.ID = "ddb8c6cc-bd62-4033-b583-14f4a6d1fe28"
+
+	p.Equipment[e1.ID] = e1
+	p.Equipment[e2.ID] = e2
+	p.Equipment[e3.ID] = e3
+
+	p.Spirits[s1.ID] = s1
+	p.Spirits[s2.ID] = s2
 
 	s1.Inhabit(e3)
 	s2.Inhabit(e1)
-
-	return nil, 200
-}
-
-func getStatus(g *game, numActionsSeen int) (string, error, int) {
-	if numActionsSeen > g.NumActions {
-		return "", errors.New("Invalid number of actions seen.\n"), 400
-	}
-
-	status, err := g.ToJSON(numActionsSeen)
-	if err != nil {
-		return "", errors.New("Could not get status.\n"), 500
-	}
-
-	return string(status), nil, 200
 }

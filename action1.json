@@ -1,0 +1,88 @@
+{
+  "token": "446f5322-ced2-4f9f-83cc-a98f9efd11f9",
+  "actions": [{
+      "user": {
+        "id": "8bfd5081-7dd0-4d76-a726-c7b60497967d",
+        "hp": 20,
+        "name": "mage",
+        "maxHP": 20,
+        "atk": 23,
+        "def": 5,
+        "Speed": 10,
+        "moves": [{
+          "name": "switch",
+          "power": -1
+        }, {
+          "name": "overpowered",
+          "power": 50
+        }, {
+          "name": "puny",
+          "power": 3
+        }],
+        "inhabiting": "21cb7976-7148-4c94-a1d1-627645236b25"
+      },
+      "targets": [{
+        "id": "cf8485fc-859a-498c-b7e5-5012c9cff328",
+        "name": "bow",
+        "hp": 80,
+        "maxHP": 80,
+        "atk": 20,
+        "def": 2,
+        "moves": [{
+          "name": "overpowered",
+          "power": 50
+        }, {
+          "name": "why would you even bother",
+          "power": 1
+        }],
+        "inhabited": false
+      }],
+      "move": {
+        "name": "switch",
+        "power": -1
+      }
+    },
+    {
+      "user": {
+        "id": "6d3853d8-fffb-492c-98ac-b849b447abc4",
+        "hp": 30,
+        "name": "thief",
+        "maxHP": 30,
+        "atk": 12,
+        "def": 10,
+        "Speed": 15,
+        "moves": [{
+          "name": "switch",
+          "power": -1
+        }, {
+          "name": "weak",
+          "power": 5
+        }, {
+          "name": "average",
+          "power": 10
+        }],
+        "inhabiting": "0b034d07-05b2-4fca-8635-29bfbc489bd3"
+      },
+      "targets": [{
+        "id": "e2a8f993-9b2b-427e-b6ff-e34f148801d4",
+        "name": "breastplate",
+        "hp": 100,
+        "maxHP": 100,
+        "atk": 0,
+        "def": 20,
+        "moves": [{
+          "name": "puny",
+          "power": 3
+        }, {
+          "name": "weak",
+          "power": 5
+        }],
+        "inhabited": false
+      }],
+      "move": {
+        "name": "weak",
+        "power": 5
+      }
+    }
+  ]
+}

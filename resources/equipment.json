@@ -1,9 +1,15 @@
 {
   "sword": {
     "name": "sword",
-    "maxHP": 50,
+    "maxHP": 3,
     "atk": 20,
-    "def": 5,
+    "defenses": {
+      "type1": 1,
+      "type2": 2,
+      "type3": 3,
+      "type4": 4
+    },
+    "weight": 5,
     "moves": [
       "strong",
       "average"
@@ -11,9 +17,15 @@
   },
   "shield": {
     "name": "shield",
-    "maxHP": 70,
+    "maxHP": 4,
     "atk": 5,
-    "def": 18,
+    "defenses": {
+      "type1": 1,
+      "type2": 2,
+      "type3": 3,
+      "type4": 4
+    },
+    "weight": 10,
     "moves": [
       "weak",
       "average"
@@ -21,9 +33,15 @@
   },
   "helmet": {
     "name": "helmet",
-    "maxHP": 60,
+    "maxHP": 3,
     "atk": 12,
-    "def": 12,
+    "defenses": {
+      "type1": 1,
+      "type2": 2,
+      "type3": 3,
+      "type4": 4
+    },
+    "weight": 4,
     "moves": [
       "strong",
       "weak"
@@ -31,9 +49,15 @@
   },
   "breastplate": {
     "name": "breastplate",
-    "maxHP": 100,
+    "maxHP": 4,
     "atk": 0,
-    "def": 20,
+    "defenses": {
+      "type1": 1,
+      "type2": 2,
+      "type3": 3,
+      "type4": 4
+    },
+    "weight": 20,
     "moves": [
       "puny",
       "weak"
@@ -41,9 +65,15 @@
   },
   "bow": {
     "name": "bow",
-    "maxHP": 80,
+    "maxHP": 2,
     "atk": 20,
-    "def": 2,
+    "defenses": {
+      "type1": 1,
+      "type2": 2,
+      "type3": 3,
+      "type4": 4
+    },
+    "weight": 2,
     "moves": [
       "overpowered",
       "why would you even bother"
@@ -51,9 +81,15 @@
   },
   "axe": {
     "name": "axe",
-    "maxHP": 20,
+    "maxHP": 2,
     "atk": 25,
-    "def": 3,
+    "defenses": {
+      "type1": 1,
+      "type2": 2,
+      "type3": 3,
+      "type4": 4
+    },
+    "weight": 7,
     "moves": [
       "overpowered",
       "just for the memes"
