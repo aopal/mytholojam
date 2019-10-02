@@ -1,9 +1,9 @@
 package gameplay
 
 type action struct {
-	User    *spirit      `json:"user"`
-	Targets []*equipment `json:"targets"`
-	Move    *move        `json:"move"` // name of attacking move, or the special 'swap' move
+	User    *Spirit      `json:"user"`
+	Targets []*Equipment `json:"targets"`
+	Move    *Move        `json:"move"` // name of attacking move, or the special 'swap' move
 }
 
 type actionPayload struct {

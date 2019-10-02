@@ -36,7 +36,7 @@ func StatusHandler(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
-func getStatus(g *game, numActionsSeen int) (string, error, int) {
+func getStatus(g *Game, numActionsSeen int) (string, error, int) {
 	if numActionsSeen > g.NumActions {
 		return "", errors.New("Invalid number of actions seen.\n"), 400
 	}

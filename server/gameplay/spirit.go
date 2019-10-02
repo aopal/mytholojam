@@ -6,16 +6,17 @@ import (
 	"github.com/google/uuid"
 )
 
-type spirit struct {
-	ID         string         `json:"id"`
-	Name       string         `json:"name"`
-	HP         int            `json:"hp"`
-	MaxHP      int            `json:"maxHP"`
-	ATK        int            `json:"atk"`
-	Defs       map[string]int `json:"defenses"`
-	Speed      int            `json:"speed"`
-	Moves      []*move        `json:"moves"`
-	Inhabiting *equipment     `json:"inhabiting"`
+type Spirit struct {
+	ID           string         `json:"id"`
+	Name         string         `json:"name"`
+	HP           int            `json:"hp"`
+	MaxHP        int            `json:"maxHP"`
+	ATK          int            `json:"atk"`
+	Defs         map[string]int `json:"defenses"`
+	Speed        int            `json:"speed"`
+	Moves        []*Move        `json:"moves"`
+	Inhabiting   *Equipment     `json:"inhabiting"`
+	InhabitingId string         `json:"inhabitingId"`
 }
 
 type spiritTemplate struct {
@@ -27,23 +28,23 @@ type spiritTemplate struct {
 	Moves []string       `json:"moves"`
 }
 
-func (s *spirit) getID() string {
+func (s *Spirit) getID() string {
 	return s.ID
 }
 
-func (s *spirit) getName() string {
+func (s *Spirit) getName() string {
 	return s.Name
 }
 
-func (s *spirit) getDef(dmgType string) int {
+func (s *Spirit) getDef(dmgType string) int {
 	return s.Defs[dmgType]
 }
 
-func (s *spirit) takeDamage(dmg int) {
+func (s *Spirit) takeDamage(dmg int) {
 	s.HP -= dmg
 }
 
-func (s *spirit) Inhabit(e *equipment) bool {
+func (s *Spirit) Inhabit(e *Equipment) bool {
 	if e.Inhabited {
 		return false
 	}
@@ -60,32 +61,33 @@ func (s *spirit) Inhabit(e *equipment) bool {
 	return true
 }
 
-func (s *spirit) MarshalJSON() ([]byte, error) {
+func (s *Spirit) MarshalJSON() ([]byte, error) {
 	return json.Marshal(&struct {
-		ID         string         `json:"id"`
-		HP         int            `json:"hp"`
-		Name       string         `json:"name"`
-		MaxHP      int            `json:"maxHP"`
-		ATK        int            `json:"atk"`
-		Defs       map[string]int `json:"defenses"`
-		Speed      int            `json:"Speed"`
-		Moves      []*move        `json:"moves"`
-		Inhabiting string         `json:"inhabiting"`
+		ID           string         `json:"id"`
+		HP           int            `json:"hp"`
+		Name         string         `json:"name"`
+		MaxHP        int            `json:"maxHP"`
+		ATK          int            `json:"atk"`
+		Defs         map[string]int `json:"defenses"`
+		Speed        int            `json:"Speed"`
+		Moves        []*Move        `json:"moves"`
+		Inhabiting   string         `json:"inhabiting"`
+		InhabitingId string         `json:"inhabitingId"`
 	}{
-		ID:         s.ID,
-		HP:         s.HP,
-		Name:       s.Name,
-		MaxHP:      s.MaxHP,
-		ATK:        s.ATK,
-		Defs:       s.Defs,
-		Speed:      s.Speed,
-		Moves:      s.Moves,
-		Inhabiting: s.Inhabiting.ID,
+		ID:           s.ID,
+		HP:           s.HP,
+		Name:         s.Name,
+		MaxHP:        s.MaxHP,
+		ATK:          s.ATK,
+		Defs:         s.Defs,
+		Speed:        s.Speed,
+		Moves:        s.Moves,
+		InhabitingId: s.Inhabiting.ID,
 	})
 }
 
-func (st *spiritTemplate) NewSpirit() *spirit {
-	s := new(spirit)
+func (st *spiritTemplate) NewSpirit() *Spirit {
+	s := new(Spirit)
 
 	s.Name = st.Name
 	s.MaxHP = st.MaxHP

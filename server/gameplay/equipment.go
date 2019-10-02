@@ -6,17 +6,18 @@ import (
 	"github.com/google/uuid"
 )
 
-type equipment struct {
-	ID          string         `json:"id"`
-	Name        string         `json:"name"`
-	HP          int            `json:"hp"`
-	MaxHP       int            `json:"maxHP"`
-	ATK         int            `json:"atk"`
-	Defs        map[string]int `json:"defenses"`
-	Weight      int            `json:"weight"`
-	Moves       []*move        `json:"moves"`
-	Inhabited   bool           `json:"inhabited"`
-	InhabitedBy *spirit        `json:"inhabitedBy"`
+type Equipment struct {
+	ID            string         `json:"id"`
+	Name          string         `json:"name"`
+	HP            int            `json:"hp"`
+	MaxHP         int            `json:"maxHP"`
+	ATK           int            `json:"atk"`
+	Defs          map[string]int `json:"defenses"`
+	Weight        int            `json:"weight"`
+	Moves         []*Move        `json:"moves"`
+	Inhabited     bool           `json:"inhabited"`
+	InhabitedBy   *Spirit        `json:"inhabitedBy"`
+	InhabitedById string         `json:"inhabitedById"`
 }
 
 type equipmentTemplate struct {
@@ -28,53 +29,55 @@ type equipmentTemplate struct {
 	Moves  []string       `json:"moves"`
 }
 
-func (e *equipment) getID() string {
+func (e *Equipment) getID() string {
 	return e.ID
 }
 
-func (e *equipment) getName() string {
+func (e *Equipment) getName() string {
 	return e.Name
 }
 
-func (e *equipment) getDef(dmgType string) int {
+func (e *Equipment) getDef(dmgType string) int {
 	return e.Defs[dmgType]
 }
 
-func (e *equipment) takeDamage(dmg int) {
+func (e *Equipment) takeDamage(dmg int) {
 	e.HP -= dmg
 }
 
-func (e *equipment) MarshalJSON() ([]byte, error) {
-	inhabitedBy := ""
+func (e *Equipment) MarshalJSON() ([]byte, error) {
+	inhabitedById := ""
 	if e.InhabitedBy != nil {
-		inhabitedBy = e.InhabitedBy.ID
+		inhabitedById = e.InhabitedBy.ID
 	}
 
 	return json.Marshal(&struct {
-		ID          string         `json:"id"`
-		Name        string         `json:"name"`
-		HP          int            `json:"hp"`
-		MaxHP       int            `json:"maxHP"`
-		ATK         int            `json:"atk"`
-		Defs        map[string]int `json:"defenses"`
-		Moves       []*move        `json:"moves"`
-		Inhabited   bool           `json:"inhabited"`
-		InhabitedBy string         `json:"inhabitedBy"`
+		ID            string         `json:"id"`
+		Name          string         `json:"name"`
+		HP            int            `json:"hp"`
+		MaxHP         int            `json:"maxHP"`
+		ATK           int            `json:"atk"`
+		Defs          map[string]int `json:"defenses"`
+		Weight        int            `json:"weight"`
+		Moves         []*Move        `json:"moves"`
+		Inhabited     bool           `json:"inhabited"`
+		InhabitedById string         `json:"inhabitedBy"`
 	}{
-		ID:          e.ID,
-		Name:        e.Name,
-		HP:          e.HP,
-		MaxHP:       e.MaxHP,
-		ATK:         e.ATK,
-		Defs:        e.Defs,
-		Moves:       e.Moves,
-		Inhabited:   e.Inhabited,
-		InhabitedBy: inhabitedBy,
+		ID:            e.ID,
+		Name:          e.Name,
+		HP:            e.HP,
+		MaxHP:         e.MaxHP,
+		ATK:           e.ATK,
+		Defs:          e.Defs,
+		Weight:        e.Weight,
+		Moves:         e.Moves,
+		Inhabited:     e.Inhabited,
+		InhabitedById: inhabitedById,
 	})
 }
 
-func (et *equipmentTemplate) NewEquipment() *equipment {
-	e := new(equipment)
+func (et *equipmentTemplate) NewEquipment() *Equipment {
+	e := new(Equipment)
 	e.Name = et.Name
 	e.MaxHP = et.MaxHP
 	e.HP = et.MaxHP

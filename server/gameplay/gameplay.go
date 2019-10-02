@@ -6,32 +6,32 @@ import (
 	"sync"
 )
 
-var gameList map[string]*game
+var gameList map[string]*Game
 var glLock sync.RWMutex
 var bufferSize int
-var moveList map[string]*move
+var moveList map[string]*Move
 var equipList map[string]*equipmentTemplate
 var spiritList map[string]*spiritTemplate
 var types []string
 
 func Init() {
-	gameList = make(map[string]*game)
+	gameList = make(map[string]*Game)
 	bufferSize = 10
-	moveList = make(map[string]*move)
+	moveList = make(map[string]*Move)
 	equipList = make(map[string]*equipmentTemplate)
 	spiritList = make(map[string]*spiritTemplate)
 	types = []string{"type1", "type2", "type3", "type4"}
 
-	moveF, _ := ioutil.ReadFile("resources/moves.json")
-	equipF, _ := ioutil.ReadFile("resources/equipment.json")
-	spiritF, _ := ioutil.ReadFile("resources/spirits.json")
+	moveF, _ := ioutil.ReadFile("server/resources/moves.json")
+	equipF, _ := ioutil.ReadFile("server/resources/equipment.json")
+	spiritF, _ := ioutil.ReadFile("server/resources/spirits.json")
 
 	_ = json.Unmarshal([]byte(moveF), &moveList)
 	_ = json.Unmarshal([]byte(equipF), &equipList)
 	_ = json.Unmarshal([]byte(spiritF), &spiritList)
 }
 
-func initializeDummyPlayer1(p *player) {
+func initializeDummyPlayer1(p *Player) {
 	e1 := equipList["sword"].NewEquipment()
 	e2 := equipList["shield"].NewEquipment()
 	e3 := equipList["bow"].NewEquipment()
@@ -57,7 +57,7 @@ func initializeDummyPlayer1(p *player) {
 	s2.Inhabit(e2)
 }
 
-func initializeDummyPlayer2(p *player) {
+func initializeDummyPlayer2(p *Player) {
 	e1 := equipList["helmet"].NewEquipment()
 	e2 := equipList["breastplate"].NewEquipment()
 	e3 := equipList["axe"].NewEquipment()

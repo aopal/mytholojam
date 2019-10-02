@@ -41,12 +41,12 @@ func ActionHandler(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
-func takeAction(g *game, body []byte) (error, int) {
+func takeAction(g *Game, body []byte) (error, int) {
 	var payload actionPayload
 
 	json.Unmarshal(body, &payload)
 
-	if payload.Token != g.player1.id && payload.Token != g.player2.id {
+	if payload.Token != g.Player1.id && payload.Token != g.Player2.id {
 		return errors.New("Invalid token.\n"), 401
 	}
 
@@ -60,14 +60,14 @@ func takeAction(g *game, body []byte) (error, int) {
 
 	p.nextActions = payload.Actions
 
-	if g.player1.nextActions != nil && g.player2.nextActions != nil {
+	if g.Player1.nextActions != nil && g.Player2.nextActions != nil {
 		calculateActionOrder(g)
 	}
 
 	return nil, 200
 }
 
-func validateActions(g *game, p *player, actions []*action) (error, int) {
+func validateActions(g *Game, p *Player, actions []*action) (error, int) {
 	if len(actions) != len(p.Spirits) { // # spirits should only ever be 1 or 2
 		return errors.New("Wrong number of actions.\n"), 400
 	}
@@ -86,12 +86,12 @@ func validateActions(g *game, p *player, actions []*action) (error, int) {
 	return nil, 200
 }
 
-func validateSingleAction(g *game, p *player, a *action) (error, int) {
+func validateSingleAction(g *Game, p *Player, a *action) (error, int) {
 	if _, ok := p.Spirits[a.User.ID]; !ok {
 		return errors.New("Invalid action1.\n"), 400
 	}
 
-	var teamTargeted map[string]*equipment
+	var teamTargeted map[string]*Equipment
 	op := p.opponent
 	a.User = p.Spirits[a.User.ID]  // ensure client can't submit fake spirit stats
 	a.Move = moveList[a.Move.Name] // ensure client can't submit fake moves
@@ -130,10 +130,10 @@ func validateSingleAction(g *game, p *player, a *action) (error, int) {
 	return nil, 200
 }
 
-func calculateActionOrder(g *game) {
+func calculateActionOrder(g *Game) {
 	actions := append(
-		g.player1.nextActions,
-		g.player2.nextActions...,
+		g.Player1.nextActions,
+		g.Player2.nextActions...,
 	)
 
 	sort.Slice(actions, func(i, j int) bool {
@@ -154,7 +154,7 @@ func calculateActionOrder(g *game) {
 	g.NumActions += len(actions)
 }
 
-func applyEffect(g *game, a *action) {
+func applyEffect(g *Game, a *action) {
 	if a.Move.Name == "switch" {
 		fmt.Println(a.User.Name, "switches from", a.User.Inhabiting.Name, "to", a.Targets[0].Name)
 		a.User.Inhabit(a.Targets[0])

@@ -5,41 +5,40 @@ import (
 	"sync"
 )
 
-type game struct {
+type Game struct {
 	GameID      string             `json:"gameID"`
-	Players     map[string]*player `json:"players"`
+	Players     map[string]*Player `json:"players"`
 	NumActions  int                `json:"numActions"`
 	ActionOrder []*action          `json:"newActions"` // nextactions are only appended here once both have been received by the server
-
-	player1 *player
-	player2 *player
-	lock    sync.RWMutex
+	Player1     *Player            `json:"player1"`
+	Player2     *Player            `json:"player2"`
+	lock        sync.RWMutex
 }
 
-type player struct {
-	Equipment   map[string]*equipment `json:"equipment"`
-	Spirits     map[string]*spirit    `json:"spirits"`
+type Player struct {
+	Equipment   map[string]*Equipment `json:"equipment"`
+	Spirits     map[string]*Spirit    `json:"spirits"`
 	id          string
-	opponent    *player
+	opponent    *Player
 	nextActions []*action
 }
 
-func (g *game) ToJSON(numActionsSeen int) ([]byte, error) {
+func (g *Game) ToJSON(numActionsSeen int) ([]byte, error) {
 	return json.Marshal(&struct {
 		GameID     string    `json:"gameID"`
-		Player1    player    `json:"player1"`
-		Player2    player    `json:"player2"`
+		Player1    *Player   `json:"player1"`
+		Player2    *Player   `json:"player2"`
 		NumActions int       `json:"numActions"`
 		NewActions []*action `json:"newActions"`
 	}{
 		GameID:     g.GameID,
-		Player1:    *g.player1,
-		Player2:    *g.player2,
+		Player1:    g.Player1,
+		Player2:    g.Player2,
 		NumActions: g.NumActions,
 		NewActions: g.calculateActionsToSend(numActionsSeen),
 	})
 }
 
-func (g *game) calculateActionsToSend(numActionsSeen int) []*action {
+func (g *Game) calculateActionsToSend(numActionsSeen int) []*action {
 	return g.ActionOrder[numActionsSeen:]
 }
