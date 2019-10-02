@@ -3,7 +3,7 @@ package main
 import (
 	"context"
 	"log"
-	"mytholojam-server/gameplay"
+	"mytholojam/server/gameplay"
 	"net/http"
 	"os"
 	"os/signal"
