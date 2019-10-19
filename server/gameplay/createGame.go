@@ -1,9 +1,13 @@
 package gameplay
 
 import (
+	"errors"
 	"log"
 	"net/http"
 
+	"mytholojam/server/types"
+
+	"github.com/google/uuid"
 	"github.com/gorilla/mux"
 )
 
@@ -27,33 +31,33 @@ func CreateHandler(w http.ResponseWriter, r *http.Request) {
 		w.WriteHeader(code)
 		w.Write([]byte(err.Error()))
 	} else {
-		w.Write([]byte(g.Player1.id))
+		w.Write([]byte(g.Player1.ID))
 	}
 }
 
-func createGame(gameID string) (*Game, error, int) {
-	// player1Token, err := uuid.NewRandom()
-	// if err != nil {
-	// 	return nil, errors.New("Could not create game.\n"), 500
-	// }
-
-	g := Game{
-		GameID:      gameID,
-		Players:     make(map[string]*Player),
-		ActionOrder: make([]*action, 0),
+func createGame(gameID string) (*types.Game, error, int) {
+	player1Token, err := uuid.NewRandom()
+	if err != nil {
+		return nil, errors.New("Could not create game.\n"), 500
 	}
-	g.lock.Lock()
-	defer g.lock.Unlock()
+
+	g := types.Game{
+		GameID:      gameID,
+		Players:     make(map[string]*types.Player),
+		ActionOrder: make([]*types.Action, 0),
+	}
+	g.Lock.Lock()
+	defer g.Lock.Unlock()
 
 	gameList[gameID] = &g
 
-	p1 := Player{
-		Equipment:   make(map[string]*Equipment),
-		Spirits:     make(map[string]*Spirit),
-		id:          "446f5322-ced2-4f9f-83cc-a98f9efd11f9", //player1Token.String(),
-		nextActions: nil,
+	p1 := types.Player{
+		Equipment:   make(map[string]*types.Equipment),
+		Spirits:     make(map[string]*types.Spirit),
+		ID:          player1Token.String(), // "446f5322-ced2-4f9f-83cc-a98f9efd11f9",
+		NextActions: nil,
 	}
-	g.Players[p1.id] = &p1
+	g.Players[p1.ID] = &p1
 	g.Player1 = &p1
 
 	initializeDummyPlayer1(&p1)

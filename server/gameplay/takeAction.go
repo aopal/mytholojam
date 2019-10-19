@@ -6,6 +6,8 @@ import (
 	"fmt"
 	"io/ioutil"
 	"log"
+	"mytholojam/server/resources"
+	"mytholojam/server/types"
 	"net/http"
 	"sort"
 
@@ -25,8 +27,8 @@ func ActionHandler(w http.ResponseWriter, r *http.Request) {
 	}
 
 	g := gameList[gameID]
-	g.lock.Lock()
-	defer g.lock.Unlock()
+	g.Lock.Lock()
+	defer g.Lock.Unlock()
 
 	b, _ := ioutil.ReadAll(r.Body)
 	defer r.Body.Close()
@@ -41,12 +43,12 @@ func ActionHandler(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
-func takeAction(g *Game, body []byte) (error, int) {
-	var payload actionPayload
+func takeAction(g *types.Game, body []byte) (error, int) {
+	var payload types.ActionPayload
 
 	json.Unmarshal(body, &payload)
 
-	if payload.Token != g.Player1.id && payload.Token != g.Player2.id {
+	if payload.Token != g.Player1.ID && payload.Token != g.Player2.ID {
 		return errors.New("Invalid token.\n"), 401
 	}
 
@@ -58,21 +60,21 @@ func takeAction(g *Game, body []byte) (error, int) {
 		return err, code
 	}
 
-	p.nextActions = payload.Actions
+	p.NextActions = payload.Actions
 
-	if g.Player1.nextActions != nil && g.Player2.nextActions != nil {
+	if g.Player1.NextActions != nil && g.Player2.NextActions != nil {
 		calculateActionOrder(g)
 	}
 
 	return nil, 200
 }
 
-func validateActions(g *Game, p *Player, actions []*action) (error, int) {
+func validateActions(g *types.Game, p *types.Player, actions []*types.Action) (error, int) {
 	if len(actions) != len(p.Spirits) { // # spirits should only ever be 1 or 2
 		return errors.New("Wrong number of actions.\n"), 400
 	}
 
-	if p.nextActions != nil {
+	if p.NextActions != nil {
 		return errors.New("Actions already submitted.\n"), 400
 	}
 
@@ -86,15 +88,15 @@ func validateActions(g *Game, p *Player, actions []*action) (error, int) {
 	return nil, 200
 }
 
-func validateSingleAction(g *Game, p *Player, a *action) (error, int) {
+func validateSingleAction(g *types.Game, p *types.Player, a *types.Action) (error, int) {
 	if _, ok := p.Spirits[a.User.ID]; !ok {
 		return errors.New("Invalid action1.\n"), 400
 	}
 
-	var teamTargeted map[string]*Equipment
-	op := p.opponent
-	a.User = p.Spirits[a.User.ID]  // ensure client can't submit fake spirit stats
-	a.Move = moveList[a.Move.Name] // ensure client can't submit fake moves
+	var teamTargeted map[string]*types.Equipment
+	op := p.Opponent
+	a.User = p.Spirits[a.User.ID]            // ensure client can't submit fake spirit stats
+	a.Move = resources.MoveList[a.Move.Name] // ensure client can't submit fake moves
 
 	if len(a.Targets) == 0 || len(a.Targets) > 1 && !a.Move.MultiTarget {
 		return errors.New("Invalid action2.\n"), 400
@@ -112,9 +114,9 @@ func validateSingleAction(g *Game, p *Player, a *action) (error, int) {
 			return errors.New("Invalid action3.\n"), 400
 		}
 
-		fmt.Println(teamTargeted)
-		fmt.Println(t.ID)
-		fmt.Println(teamTargeted[t.ID])
+		// fmt.Println(teamTargeted)
+		// fmt.Println(t.ID)
+		// fmt.Println(teamTargeted[t.ID])
 
 		if _, ok := teamTargeted[t.ID]; !ok {
 			return errors.New("Invalid action4.\n"), 400
@@ -130,10 +132,10 @@ func validateSingleAction(g *Game, p *Player, a *action) (error, int) {
 	return nil, 200
 }
 
-func calculateActionOrder(g *Game) {
+func calculateActionOrder(g *types.Game) {
 	actions := append(
-		g.Player1.nextActions,
-		g.Player2.nextActions...,
+		g.Player1.NextActions,
+		g.Player2.NextActions...,
 	)
 
 	sort.Slice(actions, func(i, j int) bool {
@@ -154,7 +156,7 @@ func calculateActionOrder(g *Game) {
 	g.NumActions += len(actions)
 }
 
-func applyEffect(g *Game, a *action) {
+func applyEffect(g *types.Game, a *types.Action) {
 	if a.Move.Name == "switch" {
 		fmt.Println(a.User.Name, "switches from", a.User.Inhabiting.Name, "to", a.Targets[0].Name)
 		a.User.Inhabit(a.Targets[0])
@@ -162,7 +164,7 @@ func applyEffect(g *Game, a *action) {
 		effAtk := a.User.ATK + a.Move.Power
 
 		for _, t := range a.Targets {
-			var target damageable
+			var target types.Damageable
 
 			if t.Inhabited {
 				target = t.InhabitedBy
@@ -170,13 +172,13 @@ func applyEffect(g *Game, a *action) {
 				target = t
 			}
 
-			damage := effAtk - target.getDef(a.Move.Type)
+			damage := effAtk - target.GetDef(a.Move.Type)
 			if damage < 0 {
 				damage = 0
 			}
-			target.takeDamage(damage)
+			target.TakeDamage(damage)
 
-			fmt.Println(a.User.Name, "uses", a.Move.Name, "on", target.getName(), "for", damage, "damage.")
+			fmt.Println(a.User.Name, "uses", a.Move.Name, "on", target.GetName(), "for", damage, "damage.")
 		}
 	}
 }

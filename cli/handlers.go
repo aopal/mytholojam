@@ -1,10 +1,11 @@
 package main
 
 import (
+	"bytes"
 	"encoding/json"
 	"fmt"
 	"io/ioutil"
-	"mytholojam/server/gameplay"
+	"mytholojam/server/types"
 	"net/http"
 )
 
@@ -23,20 +24,20 @@ func create(game string) {
 		return
 	}
 
-	currentGame = game
 	tokenList[game] = string(b)
 	playerList[game] = 1
+	switchGame(game)
 
 	status()
 
 	// gameList[game].Players[token] = gameList[game].Player1
 
-	fmt.Printf("You have successfully created '%v'\n", game)
+	fmt.Printf("You have successfully created %v\n", game)
 }
 
 func join(game string) {
 	if _, ok := tokenList[game]; ok {
-		fmt.Printf("You have already joined '%v'\n", game)
+		fmt.Printf("You have already joined %v\n", game)
 		return
 	}
 
@@ -54,17 +55,17 @@ func join(game string) {
 		return
 	}
 
-	currentGame = game
 	tokenList[game] = string(b)
 	playerList[game] = 2
+	switchGame(game)
 
 	status()
 
-	fmt.Printf("You have successfully joined '%v'\n", game)
+	fmt.Printf("You have successfully joined %v\n", game)
 }
 
 func status() {
-	res, err := http.Get(statusEndpoint + currentGame + "/0")
+	res, err := http.Get(statusEndpoint + currentGame + "/0") // + currentGameData().NumActions)
 	if err != nil {
 		fmt.Printf("An error occurred: %v\n", err)
 		return
@@ -73,23 +74,93 @@ func status() {
 	b, _ := ioutil.ReadAll(res.Body)
 	defer res.Body.Close()
 
-	var g gameplay.Game
+	var g types.Game
 
 	json.Unmarshal(b, &g)
-
-	// fmt.Printf("%+v\n", g)
-	// fmt.Printf("%+v\n", g.Player1)
 
 	gameList[currentGame] = &g
 	relink(&g)
 }
 
-func relink(g *gameplay.Game) {
-	// if g.Player1 != nil && g.Player2 != nil {
-	// 	g.Player1.Opponent = g.Player2
-	// 	g.Player2.Opponent = g.Player1
-	// }
+func act(user, move, target string) {
+	if len(currentAP().Actions) >= 2 {
+		fmt.Println("Some weird shit happened. Clear your queued actions and try again")
+		return
+	}
 
+	u, m, t, err := findEntities(user, move, target)
+
+	if err != nil {
+		fmt.Println(err)
+		return
+	}
+
+	newA := types.Action{User: u, Move: m, Targets: []*types.Equipment{t}}
+	currentAP().Actions = append(currentAP().Actions, &newA)
+
+	if len(currentAP().Actions) == 2 {
+		body, _ := json.Marshal(currentAP())
+
+		_, err := http.Post(actionEndpoint+currentGame, "application/json", bytes.NewBuffer(body))
+
+		currentAP().Actions = make([]*types.Action, 0, 2)
+		if err != nil {
+			fmt.Printf("An error occurred: %v\n", err)
+			return
+		}
+	}
+}
+
+func findEntities(user, move, target string) (*types.Spirit, *types.Move, *types.Equipment, error) {
+	var u *types.Spirit = nil
+	var m *types.Move = nil
+	var t *types.Equipment = nil
+
+	for _, v := range currentPlayer().Spirits {
+		if v.Name == user {
+			u = v
+			break
+		}
+	}
+
+	if u == nil {
+		return nil, nil, nil, fmt.Errorf("Invalid user, could not find spirit " + user)
+	}
+
+	for _, v := range u.Moves {
+		if v.Name == move {
+			m = v
+			break
+		}
+	}
+
+	if m == nil {
+		return nil, nil, nil, fmt.Errorf("Invalid move, could not find " + move + " for user " + user)
+	}
+
+	var teamTargeted map[string]*types.Equipment
+
+	if m.TeamTargetable == "self" {
+		teamTargeted = currentPlayer().Equipment
+	} else if m.TeamTargetable == "other" {
+		teamTargeted = opponent().Equipment
+	}
+
+	for _, v := range teamTargeted {
+		if v.Name == target {
+			t = v
+			break
+		}
+	}
+
+	if t == nil {
+		return nil, nil, nil, fmt.Errorf("Invalid target, could not find equipment " + target)
+	}
+
+	return u, m, t, nil
+}
+
+func relink(g *types.Game) {
 	if currentPlayer() != nil {
 		relinkPlayer(currentPlayer())
 	}
@@ -99,11 +170,9 @@ func relink(g *gameplay.Game) {
 	}
 }
 
-func relinkPlayer(p *gameplay.Player) {
+func relinkPlayer(p *types.Player) {
 	for _, s := range p.Spirits {
 		s.Inhabiting = p.Equipment[s.InhabitingId]
 		p.Equipment[s.InhabitingId].InhabitedBy = s
-		// fmt.Printf("%+v\n", s)
-		// fmt.Printf("\t%+v\n\n", s.Inhabiting)
 	}
 }

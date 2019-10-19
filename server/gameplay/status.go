@@ -2,7 +2,9 @@ package gameplay
 
 import (
 	"errors"
+	"fmt"
 	"log"
+	"mytholojam/server/types"
 	"net/http"
 	"strconv"
 
@@ -23,8 +25,8 @@ func StatusHandler(w http.ResponseWriter, r *http.Request) {
 	}
 
 	g := gameList[gameID]
-	g.lock.RLock()
-	defer g.lock.RUnlock()
+	g.Lock.RLock()
+	defer g.Lock.RUnlock()
 
 	status, err, code := getStatus(g, numActionsSeen)
 
@@ -36,13 +38,14 @@ func StatusHandler(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
-func getStatus(g *Game, numActionsSeen int) (string, error, int) {
+func getStatus(g *types.Game, numActionsSeen int) (string, error, int) {
 	if numActionsSeen > g.NumActions {
 		return "", errors.New("Invalid number of actions seen.\n"), 400
 	}
 
 	status, err := g.ToJSON(numActionsSeen)
 	if err != nil {
+		fmt.Println(err)
 		return "", errors.New("Could not get status.\n"), 500
 	}
 

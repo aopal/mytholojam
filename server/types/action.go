@@ -1,19 +1,12 @@
-package gameplay
+package types
 
-type action struct {
+type Action struct {
 	User    *Spirit      `json:"user"`
 	Targets []*Equipment `json:"targets"`
 	Move    *Move        `json:"move"` // name of attacking move, or the special 'swap' move
 }
 
-type actionPayload struct {
+type ActionPayload struct {
 	Token   string    `json:"token"`
-	Actions []*action `json:"actions"`
-}
-
-type damageable interface {
-	getID() string
-	getName() string
-	getDef(string) int
-	takeDamage(int)
+	Actions []*Action `json:"actions"`
 }

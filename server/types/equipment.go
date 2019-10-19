@@ -1,4 +1,4 @@
-package gameplay
+package types
 
 import (
 	"encoding/json"
@@ -18,31 +18,49 @@ type Equipment struct {
 	Inhabited     bool           `json:"inhabited"`
 	InhabitedBy   *Spirit        `json:"inhabitedBy"`
 	InhabitedById string         `json:"inhabitedById"`
+	onHit         Callback
+	onMiss        Callback
+	onDbl         Callback
 }
 
-type equipmentTemplate struct {
+type EquipmentTemplate struct {
 	Name   string         `json:"name"`
 	MaxHP  int            `json:"maxHP"`
 	ATK    int            `json:"atk"`
 	Defs   map[string]int `json:"defenses"`
 	Weight int            `json:"weight"`
-	Moves  []string       `json:"moves"`
+	Moves  []*Move        `json:"moves"`
+	OnHit  Callback       `json:"-"`
+	OnMiss Callback       `json:"-"`
+	OnDbl  Callback       `json:"-"`
 }
 
-func (e *Equipment) getID() string {
+func (e *Equipment) GetID() string {
 	return e.ID
 }
 
-func (e *Equipment) getName() string {
+func (e *Equipment) GetName() string {
 	return e.Name
 }
 
-func (e *Equipment) getDef(dmgType string) int {
+func (e *Equipment) GetDef(dmgType string) int {
 	return e.Defs[dmgType]
 }
 
-func (e *Equipment) takeDamage(dmg int) {
+func (e *Equipment) TakeDamage(dmg int) {
 	e.HP -= dmg
+}
+
+func (e *Equipment) OnHit(user *Spirit, target *Equipment, move *Move) {
+	e.onHit(user, target, move)
+}
+
+func (e *Equipment) OnMiss(user *Spirit, target *Equipment, move *Move) {
+	e.onMiss(user, target, move)
+}
+
+func (e *Equipment) OnDbl(user *Spirit, target *Equipment, move *Move) {
+	e.onDbl(user, target, move)
 }
 
 func (e *Equipment) MarshalJSON() ([]byte, error) {
@@ -50,6 +68,9 @@ func (e *Equipment) MarshalJSON() ([]byte, error) {
 	if e.InhabitedBy != nil {
 		inhabitedById = e.InhabitedBy.ID
 	}
+
+	// fmt.Printf("%+v\n", e)
+	// return json.Marshal("asdf")
 
 	return json.Marshal(&struct {
 		ID            string         `json:"id"`
@@ -76,7 +97,7 @@ func (e *Equipment) MarshalJSON() ([]byte, error) {
 	})
 }
 
-func (et *equipmentTemplate) NewEquipment() *Equipment {
+func (et *EquipmentTemplate) NewEquipment() *Equipment {
 	e := new(Equipment)
 	e.Name = et.Name
 	e.MaxHP = et.MaxHP
@@ -85,11 +106,15 @@ func (et *equipmentTemplate) NewEquipment() *Equipment {
 	e.Defs = et.Defs
 	e.Weight = et.Weight
 
+	e.onHit = et.OnHit
+	e.onMiss = et.OnMiss
+	e.onDbl = et.OnDbl
+
 	id, _ := uuid.NewRandom()
 	e.ID = id.String()
 
 	for _, move := range et.Moves {
-		e.Moves = append(e.Moves, moveList[move])
+		e.Moves = append(e.Moves, move)
 	}
 
 	return e

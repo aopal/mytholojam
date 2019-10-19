@@ -1,4 +1,4 @@
-package gameplay
+package types
 
 import (
 	"encoding/json"
@@ -9,18 +9,10 @@ type Game struct {
 	GameID      string             `json:"gameID"`
 	Players     map[string]*Player `json:"players"`
 	NumActions  int                `json:"numActions"`
-	ActionOrder []*action          `json:"newActions"` // nextactions are only appended here once both have been received by the server
+	ActionOrder []*Action          `json:"newActions"` // nextactions are only appended here once both have been received by the server
 	Player1     *Player            `json:"player1"`
 	Player2     *Player            `json:"player2"`
-	lock        sync.RWMutex
-}
-
-type Player struct {
-	Equipment   map[string]*Equipment `json:"equipment"`
-	Spirits     map[string]*Spirit    `json:"spirits"`
-	id          string
-	opponent    *Player
-	nextActions []*action
+	Lock        sync.RWMutex       `json:"-"`
 }
 
 func (g *Game) ToJSON(numActionsSeen int) ([]byte, error) {
@@ -29,7 +21,7 @@ func (g *Game) ToJSON(numActionsSeen int) ([]byte, error) {
 		Player1    *Player   `json:"player1"`
 		Player2    *Player   `json:"player2"`
 		NumActions int       `json:"numActions"`
-		NewActions []*action `json:"newActions"`
+		NewActions []*Action `json:"newActions"`
 	}{
 		GameID:     g.GameID,
 		Player1:    g.Player1,
@@ -39,6 +31,6 @@ func (g *Game) ToJSON(numActionsSeen int) ([]byte, error) {
 	})
 }
 
-func (g *Game) calculateActionsToSend(numActionsSeen int) []*action {
+func (g *Game) calculateActionsToSend(numActionsSeen int) []*Action {
 	return g.ActionOrder[numActionsSeen:]
 }
