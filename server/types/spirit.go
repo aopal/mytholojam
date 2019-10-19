@@ -34,35 +34,28 @@ type SpiritTemplate struct {
 	OnDbl  Callback       `json:"-"`
 }
 
-func (s *Spirit) GetID() string {
-	return s.ID
+func (s *Spirit) GetID() string             { return s.ID }
+func (s *Spirit) GetName() string           { return s.Name }
+func (s *Spirit) GetDef(dmgType string) int { return s.Defs[dmgType] }
+func (s *Spirit) GetHP() int                { return s.HP }
+func (s *Spirit) TakeDamage(dmg int)        { s.HP -= dmg }
+func (s *Spirit) GetEquipment() *Equipment  { return s.Inhabiting }
+
+func (s *Spirit) OnHit(user *Spirit, target Damageable, move *Move, damage int) {
+	s.onHit(user, target, move, damage)
 }
 
-func (s *Spirit) GetName() string {
-	return s.Name
+func (s *Spirit) OnMiss(user *Spirit, target Damageable, move *Move, damage int) {
+	s.onMiss(user, target, move, damage)
 }
 
-func (s *Spirit) GetDef(dmgType string) int {
-	return s.Defs[dmgType]
+func (s *Spirit) OnDbl(user *Spirit, target Damageable, move *Move, damage int) {
+	s.onDbl(user, target, move, damage)
 }
 
-func (s *Spirit) TakeDamage(dmg int) {
-	s.HP -= dmg
-}
+func (s *Spirit) Inhabit(t Damageable) bool {
+	e := t.GetEquipment()
 
-func (s *Spirit) OnHit(user *Spirit, target *Equipment, move *Move) {
-	s.onHit(user, target, move)
-}
-
-func (s *Spirit) OnMiss(user *Spirit, target *Equipment, move *Move) {
-	s.onMiss(user, target, move)
-}
-
-func (s *Spirit) OnDbl(user *Spirit, target *Equipment, move *Move) {
-	s.onDbl(user, target, move)
-}
-
-func (s *Spirit) Inhabit(e *Equipment) bool {
 	if e.Inhabited {
 		return false
 	}

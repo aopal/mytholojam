@@ -3,7 +3,6 @@ package gameplay
 import (
 	"encoding/json"
 	"errors"
-	"fmt"
 	"io/ioutil"
 	"log"
 	"mytholojam/server/resources"
@@ -102,9 +101,6 @@ func validateSingleAction(g *types.Game, p *types.Player, a *types.Action) (erro
 		return errors.New("Invalid action2.\n"), 400
 	}
 
-	// fmt.Println(a.Targets)
-	// fmt.Println(*a.Move)
-
 	for _, t := range a.Targets {
 		if a.Move.TeamTargetable == "self" {
 			teamTargeted = p.Equipment
@@ -113,10 +109,6 @@ func validateSingleAction(g *types.Game, p *types.Player, a *types.Action) (erro
 		} else {
 			return errors.New("Invalid action3.\n"), 400
 		}
-
-		// fmt.Println(teamTargeted)
-		// fmt.Println(t.ID)
-		// fmt.Println(teamTargeted[t.ID])
 
 		if _, ok := teamTargeted[t.ID]; !ok {
 			return errors.New("Invalid action4.\n"), 400
@@ -156,29 +148,36 @@ func calculateActionOrder(g *types.Game) {
 	g.NumActions += len(actions)
 }
 
-func applyEffect(g *types.Game, a *types.Action) {
-	if a.Move.Name == "switch" {
-		fmt.Println(a.User.Name, "switches from", a.User.Inhabiting.Name, "to", a.Targets[0].Name)
-		a.User.Inhabit(a.Targets[0])
-	} else {
-		effAtk := a.User.ATK + a.Move.Power
+func applyEffect(_ *types.Game, a *types.Action) {
+	for _, t := range a.Targets {
+		var target types.Damageable
 
-		for _, t := range a.Targets {
-			var target types.Damageable
-
-			if t.Inhabited {
-				target = t.InhabitedBy
-			} else {
-				target = t
-			}
-
-			damage := effAtk - target.GetDef(a.Move.Type)
-			if damage < 0 {
-				damage = 0
-			}
-			target.TakeDamage(damage)
-
-			fmt.Println(a.User.Name, "uses", a.Move.Name, "on", target.GetName(), "for", damage, "damage.")
+		if t.Inhabited {
+			target = t.InhabitedBy
+		} else {
+			target = t
 		}
+
+		damage := calculateDamage(a.User, target, a.Move)
+
+		hpBefore := target.GetHP()
+		a.Move.OnHit(a.User, target, a.Move, damage)
+		target.OnHit(a.User, target, a.Move, damage)
+		hpAfter := target.GetHP()
+
+		damageDone := hpBefore - hpAfter
+
+		log.Println(a.User.Name, "uses", a.Move.Name, "on", target.GetName(), "for", damageDone, "damage.")
 	}
+}
+
+func calculateDamage(user *types.Spirit, target types.Damageable, move *types.Move) int {
+	effAtk := user.ATK + move.Power
+	damage := effAtk - target.GetDef(move.Type)
+
+	if damage < 0 {
+		damage = 0
+	}
+
+	return damage
 }

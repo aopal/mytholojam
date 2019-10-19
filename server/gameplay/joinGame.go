@@ -49,7 +49,7 @@ func joinGame(g *types.Game) (error, int) {
 	p2 := types.Player{
 		Equipment:   make(map[string]*types.Equipment),
 		Spirits:     make(map[string]*types.Spirit),
-		ID:          player2Token.String(), // "79cfacdf-d53f-49cd-be9a-c2ad846ef13b",
+		ID:          player2Token.String(),
 		NextActions: nil,
 	}
 

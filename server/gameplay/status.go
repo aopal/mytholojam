@@ -2,7 +2,6 @@ package gameplay
 
 import (
 	"errors"
-	"fmt"
 	"log"
 	"mytholojam/server/types"
 	"net/http"
@@ -45,7 +44,7 @@ func getStatus(g *types.Game, numActionsSeen int) (string, error, int) {
 
 	status, err := g.ToJSON(numActionsSeen)
 	if err != nil {
-		fmt.Println(err)
+		log.Println(err)
 		return "", errors.New("Could not get status.\n"), 500
 	}
 

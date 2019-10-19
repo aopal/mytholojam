@@ -35,32 +35,23 @@ type EquipmentTemplate struct {
 	OnDbl  Callback       `json:"-"`
 }
 
-func (e *Equipment) GetID() string {
-	return e.ID
+func (e *Equipment) GetID() string             { return e.ID }
+func (e *Equipment) GetName() string           { return e.Name }
+func (e *Equipment) GetDef(dmgType string) int { return e.Defs[dmgType] }
+func (e *Equipment) GetHP() int                { return e.HP }
+func (e *Equipment) TakeDamage(dmg int)        { e.HP -= dmg }
+func (e *Equipment) GetEquipment() *Equipment  { return e }
+
+func (e *Equipment) OnHit(user *Spirit, target Damageable, move *Move, damage int) {
+	e.onHit(user, target, move, damage)
 }
 
-func (e *Equipment) GetName() string {
-	return e.Name
+func (e *Equipment) OnMiss(user *Spirit, target Damageable, move *Move, damage int) {
+	e.onMiss(user, target, move, damage)
 }
 
-func (e *Equipment) GetDef(dmgType string) int {
-	return e.Defs[dmgType]
-}
-
-func (e *Equipment) TakeDamage(dmg int) {
-	e.HP -= dmg
-}
-
-func (e *Equipment) OnHit(user *Spirit, target *Equipment, move *Move) {
-	e.onHit(user, target, move)
-}
-
-func (e *Equipment) OnMiss(user *Spirit, target *Equipment, move *Move) {
-	e.onMiss(user, target, move)
-}
-
-func (e *Equipment) OnDbl(user *Spirit, target *Equipment, move *Move) {
-	e.onDbl(user, target, move)
+func (e *Equipment) OnDbl(user *Spirit, target Damageable, move *Move, damage int) {
+	e.onDbl(user, target, move, damage)
 }
 
 func (e *Equipment) MarshalJSON() ([]byte, error) {
@@ -68,9 +59,6 @@ func (e *Equipment) MarshalJSON() ([]byte, error) {
 	if e.InhabitedBy != nil {
 		inhabitedById = e.InhabitedBy.ID
 	}
-
-	// fmt.Printf("%+v\n", e)
-	// return json.Marshal("asdf")
 
 	return json.Marshal(&struct {
 		ID            string         `json:"id"`

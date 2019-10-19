@@ -54,7 +54,7 @@ func createGame(gameID string) (*types.Game, error, int) {
 	p1 := types.Player{
 		Equipment:   make(map[string]*types.Equipment),
 		Spirits:     make(map[string]*types.Spirit),
-		ID:          player1Token.String(), // "446f5322-ced2-4f9f-83cc-a98f9efd11f9",
+		ID:          player1Token.String(),
 		NextActions: nil,
 	}
 	g.Players[p1.ID] = &p1

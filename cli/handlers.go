@@ -7,6 +7,7 @@ import (
 	"io/ioutil"
 	"mytholojam/server/types"
 	"net/http"
+	"strings"
 )
 
 func create(game string) {
@@ -83,8 +84,20 @@ func status() {
 }
 
 func act(user, move, target string) {
+	if currentAP() == nil {
+		fmt.Println("You haven't joined a game yet.")
+		return
+	}
+
 	if len(currentAP().Actions) >= 2 {
 		fmt.Println("Some weird shit happened. Clear your queued actions and try again")
+		return
+	}
+
+	status()
+
+	if opponent() == nil {
+		fmt.Println("An opponent has not joined the game yet")
 		return
 	}
 
@@ -117,7 +130,7 @@ func findEntities(user, move, target string) (*types.Spirit, *types.Move, *types
 	var t *types.Equipment = nil
 
 	for _, v := range currentPlayer().Spirits {
-		if v.Name == user {
+		if strings.ToLower(v.Name) == strings.ToLower(user) {
 			u = v
 			break
 		}
@@ -128,7 +141,7 @@ func findEntities(user, move, target string) (*types.Spirit, *types.Move, *types
 	}
 
 	for _, v := range u.Moves {
-		if v.Name == move {
+		if strings.ToLower(v.Name) == strings.ToLower(move) {
 			m = v
 			break
 		}
@@ -147,7 +160,7 @@ func findEntities(user, move, target string) (*types.Spirit, *types.Move, *types
 	}
 
 	for _, v := range teamTargeted {
-		if v.Name == target {
+		if strings.ToLower(v.Name) == strings.ToLower(target) {
 			t = v
 			break
 		}

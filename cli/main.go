@@ -50,7 +50,7 @@ func main() {
 	for !exit {
 		fmt.Print("> ")
 		input, _ := reader.ReadString('\n')
-		words := strings.Split(strings.TrimSpace(input), " ")
+		words := strings.Split(strings.TrimSpace(strings.ToLower(input)), " ")
 
 		switch words[0] {
 		case "help", "h":

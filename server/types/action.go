@@ -3,7 +3,7 @@ package types
 type Action struct {
 	User    *Spirit      `json:"user"`
 	Targets []*Equipment `json:"targets"`
-	Move    *Move        `json:"move"` // name of attacking move, or the special 'swap' move
+	Move    *Move        `json:"move"`
 }
 
 type ActionPayload struct {

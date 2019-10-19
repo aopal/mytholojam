@@ -1,3 +1,3 @@
 package types
 
-type Callback func(user *Spirit, target *Equipment, move *Move)
+type Callback func(user *Spirit, target Damageable, move *Move, damage int)

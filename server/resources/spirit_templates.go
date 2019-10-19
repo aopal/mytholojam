@@ -2,20 +2,26 @@ package resources
 
 import "mytholojam/server/types"
 
+var SpiritList map[string]*types.SpiritTemplate = map[string]*types.SpiritTemplate{
+	Warrior.Name: &Warrior,
+	Thief.Name:   &Thief,
+}
+
 // SAMPLE SPIRITS
 var Warrior types.SpiritTemplate = types.SpiritTemplate{
 	Name:   "Warrior",
 	MaxHP:  highHP,
 	ATK:    highATK,
 	Speed:  avgSPD,
-	OnHit:  noop,
+	OnHit:  defaultOnHit,
 	OnMiss: noop,
 	OnDbl:  noop,
 	Defs: map[string]int{
-		moveTypes[0]: lowDEF,
-		moveTypes[1]: avgDEF,
-		moveTypes[2]: avgDEF,
-		moveTypes[3]: lowDEF,
+		spiritTypes[0]: lowDEF,
+		spiritTypes[1]: avgDEF,
+		spiritTypes[2]: avgDEF,
+		spiritTypes[3]: lowDEF,
+		switchType:     switchDEF,
 	},
 	Moves: []*types.Move{
 		&Switch,
@@ -29,23 +35,19 @@ var Thief types.SpiritTemplate = types.SpiritTemplate{
 	MaxHP:  lowHP,
 	ATK:    highATK,
 	Speed:  highSPD,
-	OnHit:  noop,
+	OnHit:  defaultOnHit,
 	OnMiss: noop,
 	OnDbl:  noop,
 	Defs: map[string]int{
-		moveTypes[0]: lowDEF,
-		moveTypes[1]: avgDEF,
-		moveTypes[2]: lowDEF,
-		moveTypes[3]: avgDEF,
+		spiritTypes[0]: lowDEF,
+		spiritTypes[1]: avgDEF,
+		spiritTypes[2]: lowDEF,
+		spiritTypes[3]: avgDEF,
+		switchType:     switchDEF,
 	},
 	Moves: []*types.Move{
 		&Switch,
 		&Weak,
 		&Fast,
 	},
-}
-
-var SpiritList map[string]*types.SpiritTemplate = map[string]*types.SpiritTemplate{
-	Warrior.Name: &Warrior,
-	Thief.Name:   &Thief,
 }
