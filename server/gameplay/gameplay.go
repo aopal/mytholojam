@@ -8,7 +8,6 @@ import (
 
 var gameList map[string]*types.Game
 var glLock sync.RWMutex
-var spiritTypes []string
 
 func Init() {
 	gameList = make(map[string]*types.Game)

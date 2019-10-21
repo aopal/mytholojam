@@ -45,6 +45,7 @@ func createGame(gameID string) (*types.Game, error, int) {
 		GameID:      gameID,
 		Players:     make(map[string]*types.Player),
 		ActionOrder: make([]*types.Action, 0),
+		TurnCount:   0,
 	}
 	g.Lock.Lock()
 	defer g.Lock.Unlock()

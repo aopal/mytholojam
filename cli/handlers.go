@@ -1,191 +1,100 @@
 package main
 
 import (
-	"bytes"
-	"encoding/json"
 	"fmt"
-	"io/ioutil"
 	"mytholojam/server/types"
-	"net/http"
 	"strings"
 )
 
-func create(game string) {
-	res, err := http.Get(createEndpoint + game)
-	if err != nil {
-		fmt.Printf("An error occurred: %v\n", err)
-		return
-	}
-
-	b, _ := ioutil.ReadAll(res.Body)
-	defer res.Body.Close()
-
-	if res.StatusCode != 200 {
-		fmt.Printf("%v\n", string(b)) // The server returned an error:
-		return
-	}
-
-	tokenList[game] = string(b)
-	playerList[game] = 1
-	switchGame(game)
-
-	status()
-
-	// gameList[game].Players[token] = gameList[game].Player1
-
-	fmt.Printf("You have successfully created %v\n", game)
+func help() {
+	fmt.Println("Available commands:")
+	fmt.Println("    help/h                            Show this help text")
+	fmt.Println("    exit/e                            Exit the CLI")
+	fmt.Println("    make/m [GAME]                     Make a new game")
+	fmt.Println("    join/j [GAME]                     Join an existing game")
+	fmt.Println("    switch/s [GAME]                   Switch to another game")
+	fmt.Println("    current/c                         Print currently active game")
+	fmt.Println("    list/l                            List joined games")
+	fmt.Println("    team/t                            Get the status of your current team")
+	fmt.Println("    op/o                              Get the status of your opponent's team")
+	fmt.Println("    act/a [USER] [MOVE] [TARGET]      Submit an action for one of your spirits")
+	fmt.Println("    clearact/ca                       Clear all queued actions")
+	fmt.Println("    listact/la                        List all queued actions")
+	fmt.Println("    submitact/sa                      Submit queued actions")
+	fmt.Println("    state                             (Debug) Print current state")
 }
 
-func join(game string) {
-	if _, ok := tokenList[game]; ok {
-		fmt.Printf("You have already joined %v\n", game)
-		return
+func switchGame(game string) {
+	currentGame = game
+	if _, ok := actionsInProgress[game]; !ok {
+		ap := types.ActionPayload{Token: tokenList[currentGame], Actions: make([]*types.Action, 0, 2)}
+		actionsInProgress[game] = &ap
 	}
-
-	res, err := http.Get(joinEndpoint + game)
-	if err != nil {
-		fmt.Printf("An error occurred: %v\n", err)
-		return
-	}
-
-	b, _ := ioutil.ReadAll(res.Body)
-	defer res.Body.Close()
-
-	if res.StatusCode != 200 {
-		fmt.Printf("%v\n", string(b)) // The server returned an error:
-		return
-	}
-
-	tokenList[game] = string(b)
-	playerList[game] = 2
-	switchGame(game)
-
-	status()
-
-	fmt.Printf("You have successfully joined %v\n", game)
+	current()
 }
 
-func status() {
-	res, err := http.Get(statusEndpoint + currentGame + "/0") // + currentGameData().NumActions)
-	if err != nil {
-		fmt.Printf("An error occurred: %v\n", err)
-		return
-	}
-
-	b, _ := ioutil.ReadAll(res.Body)
-	defer res.Body.Close()
-
-	var g types.Game
-
-	json.Unmarshal(b, &g)
-
-	gameList[currentGame] = &g
-	relink(&g)
+func current() {
+	fmt.Printf("Current game: %v\n", currentGame)
 }
 
-func act(user, move, target string) {
-	if currentAP() == nil {
-		fmt.Println("You haven't joined a game yet.")
+func list() {
+	keys := make([]string, len(tokenList))
+
+	i := 0
+	for k := range tokenList {
+		keys[i] = k
+		i++
+	}
+
+	fmt.Printf("Joined games: %v\n", strings.Join(keys, ", "))
+}
+
+func state() {
+	fmt.Printf("current game: %v\n", currentGame)
+	fmt.Printf("game list: %v\n", tokenList)
+}
+
+func printCurrentTeam() {
+	if currentPlayer() == nil {
+		fmt.Println("You are not currently in a game")
 		return
 	}
 
-	if len(currentAP().Actions) >= 2 {
-		fmt.Println("Some weird shit happened. Clear your queued actions and try again")
-		return
-	}
+	printTeam(currentPlayer())
+}
 
-	status()
-
+func printOpponentTeam() {
 	if opponent() == nil {
 		fmt.Println("An opponent has not joined the game yet")
 		return
 	}
 
-	u, m, t, err := findEntities(user, move, target)
+	printTeam(opponent())
+}
 
-	if err != nil {
-		fmt.Println(err)
-		return
-	}
-
-	newA := types.Action{User: u, Move: m, Targets: []*types.Equipment{t}}
-	currentAP().Actions = append(currentAP().Actions, &newA)
-
-	if len(currentAP().Actions) == 2 {
-		body, _ := json.Marshal(currentAP())
-
-		_, err := http.Post(actionEndpoint+currentGame, "application/json", bytes.NewBuffer(body))
-
-		currentAP().Actions = make([]*types.Action, 0, 2)
-		if err != nil {
-			fmt.Printf("An error occurred: %v\n", err)
-			return
-		}
+func printTeam(p *types.Player) {
+	for _, e := range p.Equipment {
+		printEquipment(e)
 	}
 }
 
-func findEntities(user, move, target string) (*types.Spirit, *types.Move, *types.Equipment, error) {
-	var u *types.Spirit = nil
-	var m *types.Move = nil
-	var t *types.Equipment = nil
-
-	for _, v := range currentPlayer().Spirits {
-		if strings.ToLower(v.Name) == strings.ToLower(user) {
-			u = v
-			break
-		}
-	}
-
-	if u == nil {
-		return nil, nil, nil, fmt.Errorf("Invalid user, could not find spirit " + user)
-	}
-
-	for _, v := range u.Moves {
-		if strings.ToLower(v.Name) == strings.ToLower(move) {
-			m = v
-			break
-		}
-	}
-
-	if m == nil {
-		return nil, nil, nil, fmt.Errorf("Invalid move, could not find " + move + " for user " + user)
-	}
-
-	var teamTargeted map[string]*types.Equipment
-
-	if m.TeamTargetable == "self" {
-		teamTargeted = currentPlayer().Equipment
-	} else if m.TeamTargetable == "other" {
-		teamTargeted = opponent().Equipment
-	}
-
-	for _, v := range teamTargeted {
-		if strings.ToLower(v.Name) == strings.ToLower(target) {
-			t = v
-			break
-		}
-	}
-
-	if t == nil {
-		return nil, nil, nil, fmt.Errorf("Invalid target, could not find equipment " + target)
-	}
-
-	return u, m, t, nil
-}
-
-func relink(g *types.Game) {
-	if currentPlayer() != nil {
-		relinkPlayer(currentPlayer())
-	}
-
-	if opponent() != nil {
-		relinkPlayer(opponent())
+func printEquipment(e *types.Equipment) {
+	fmt.Printf("%v HP: %v/%v ATK: %v WGHT: %v\n", e.Name, e.HP, e.MaxHP, e.ATK, e.Weight)
+	if e.Inhabited {
+		printSpirit(e.InhabitedBy)
 	}
 }
 
-func relinkPlayer(p *types.Player) {
-	for _, s := range p.Spirits {
-		s.Inhabiting = p.Equipment[s.InhabitingId]
-		p.Equipment[s.InhabitingId].InhabitedBy = s
+func printSpirit(s *types.Spirit) {
+	fmt.Printf("    %v HP: %v/%v ATK: %v SPD: %v\n", s.Name, s.HP, s.MaxHP, s.ATK, s.Speed)
+	for _, m := range s.Moves {
+		printMove(m)
 	}
+	for _, m := range s.Inhabiting.Moves {
+		printMove(m)
+	}
+}
+
+func printMove(m *types.Move) {
+	fmt.Printf("        %v PWR: %v TYPE: %v PRI: %v\n", m.Name, m.Power, m.Type, m.Priority)
 }

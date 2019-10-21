@@ -1,6 +1,12 @@
 package resources
 
-var spiritTypes = [4]string{"STRN", "FLAM", "WEAR", "NAME"}
+// special constants
+const switchType = "SWITCH"
+const switchPower = 0
+const switchPri = 100
+const switchDEF = 100
+
+var spiritTypes = []string{"STRN", "FLAM", "WEAR", "NAME", switchType}
 
 const selfTarget = "self"
 const opTarget = "other"
@@ -33,8 +39,4 @@ const lowPri = -1
 const avgPri = 0
 const highPri = 1
 
-// special constants
-const switchType = "switch"
-const switchPower = 0
-const switchPri = 100
-const switchDEF = 100
+const recoilDamage = 1

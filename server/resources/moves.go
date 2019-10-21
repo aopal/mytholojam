@@ -29,7 +29,7 @@ var Strong types.Move = types.Move{
 	Priority:       avgPri,
 	MultiTarget:    false,
 	TeamTargetable: opTarget,
-	OnHit:          noop,
+	OnHit:          defaultRecoil,
 	OnMiss:         noop,
 	OnDbl:          noop,
 }
