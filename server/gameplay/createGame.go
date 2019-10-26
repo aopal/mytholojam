@@ -10,12 +10,13 @@ import (
 )
 
 func CreateHandler(w http.ResponseWriter, r *http.Request) {
-	log.Printf("Create request received")
 	glLock.Lock()
 	defer glLock.Unlock()
 
 	vars := mux.Vars(r)
 	gameID := vars["gameID"]
+
+	log.Printf("[game: " + gameID + "] Create request received")
 
 	if _, ok := gameList[gameID]; ok {
 		w.WriteHeader(400)

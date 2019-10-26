@@ -7,31 +7,31 @@ import (
 )
 
 type Spirit struct {
-	ID           string         `json:"id"`
-	Name         string         `json:"name"`
-	HP           int            `json:"hp"`
-	MaxHP        int            `json:"maxHP"`
-	ATK          int            `json:"atk"`
-	Defs         map[string]int `json:"defenses"`
-	Speed        int            `json:"speed"`
-	Moves        []*Move        `json:"moves"`
-	Inhabiting   *Equipment     `json:"inhabiting"`
-	InhabitingId string         `json:"inhabitingId"`
+	ID           string           `json:"id"`
+	Name         string           `json:"name"`
+	HP           int              `json:"hp"`
+	MaxHP        int              `json:"maxHP"`
+	ATK          int              `json:"atk"`
+	Defs         map[string]int   `json:"defenses"`
+	Speed        int              `json:"speed"`
+	Moves        map[string]*Move `json:"moves"`
+	Inhabiting   *Equipment       `json:"inhabiting"`
+	InhabitingId string           `json:"inhabitingId"`
 	onHit        CallbackArray
 	onMiss       CallbackArray
 	onDbl        CallbackArray
 }
 
 type SpiritTemplate struct {
-	Name   string         `json:"name"`
-	MaxHP  int            `json:"maxHP"`
-	ATK    int            `json:"atk"`
-	Defs   map[string]int `json:"defenses"`
-	Speed  int            `json:"speed"`
-	Moves  []*Move        `json:"moves"`
-	OnHit  CallbackArray  `json:"-"`
-	OnMiss CallbackArray  `json:"-"`
-	OnDbl  CallbackArray  `json:"-"`
+	Name   string           `json:"name"`
+	MaxHP  int              `json:"maxHP"`
+	ATK    int              `json:"atk"`
+	Defs   map[string]int   `json:"defenses"`
+	Speed  int              `json:"speed"`
+	Moves  map[string]*Move `json:"moves"`
+	OnHit  CallbackArray    `json:"-"`
+	OnMiss CallbackArray    `json:"-"`
+	OnDbl  CallbackArray    `json:"-"`
 }
 
 func (s *Spirit) GetID() string             { return s.ID }
@@ -80,16 +80,16 @@ func (s *Spirit) Inhabit(t Damageable) bool {
 
 func (s *Spirit) MarshalJSON() ([]byte, error) {
 	return json.Marshal(&struct {
-		ID           string         `json:"id"`
-		HP           int            `json:"hp"`
-		Name         string         `json:"name"`
-		MaxHP        int            `json:"maxHP"`
-		ATK          int            `json:"atk"`
-		Defs         map[string]int `json:"defenses"`
-		Speed        int            `json:"Speed"`
-		Moves        []*Move        `json:"moves"`
-		Inhabiting   string         `json:"inhabiting"`
-		InhabitingId string         `json:"inhabitingId"`
+		ID           string           `json:"id"`
+		HP           int              `json:"hp"`
+		Name         string           `json:"name"`
+		MaxHP        int              `json:"maxHP"`
+		ATK          int              `json:"atk"`
+		Defs         map[string]int   `json:"defenses"`
+		Speed        int              `json:"Speed"`
+		Moves        map[string]*Move `json:"moves"`
+		Inhabiting   string           `json:"inhabiting"`
+		InhabitingId string           `json:"inhabitingId"`
 	}{
 		ID:           s.ID,
 		HP:           s.HP,
@@ -120,8 +120,9 @@ func (st *SpiritTemplate) NewSpirit() *Spirit {
 	id, _ := uuid.NewRandom()
 	s.ID = id.String()
 
-	for _, move := range st.Moves {
-		s.Moves = append(s.Moves, move)
+	s.Moves = make(map[string]*Move)
+	for key, move := range st.Moves {
+		s.Moves[key] = move
 	}
 
 	return s

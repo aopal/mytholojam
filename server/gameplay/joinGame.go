@@ -2,7 +2,6 @@ package gameplay
 
 import (
 	"errors"
-	"log"
 	"mytholojam/server/types"
 	"net/http"
 
@@ -10,8 +9,6 @@ import (
 )
 
 func JoinHandler(w http.ResponseWriter, r *http.Request) {
-	log.Printf("Join request received")
-
 	vars := mux.Vars(r)
 	gameID := vars["gameID"]
 
@@ -24,6 +21,8 @@ func JoinHandler(w http.ResponseWriter, r *http.Request) {
 	g := gameList[gameID]
 	g.Lock.Lock()
 	defer g.Lock.Unlock()
+
+	print(g, "Join request received")
 
 	err, code := joinGame(g)
 

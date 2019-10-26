@@ -24,10 +24,10 @@ var Warrior types.SpiritTemplate = types.SpiritTemplate{
 		spiritTypes[2]: avgDEF,
 		spiritTypes[3]: lowDEF,
 	},
-	Moves: []*types.Move{
-		&Switch,
-		&Strong,
-		&Weak,
+	Moves: map[string]*types.Move{
+		Switch.Name: &Switch,
+		Strong.Name: &Strong,
+		Weak.Name:   &Weak,
 	},
 }
 
@@ -45,10 +45,10 @@ var Thief types.SpiritTemplate = types.SpiritTemplate{
 		spiritTypes[2]: lowDEF,
 		spiritTypes[3]: avgDEF,
 	},
-	Moves: []*types.Move{
-		&Switch,
-		&Weak,
-		&Fast,
+	Moves: map[string]*types.Move{
+		Switch.Name: &Switch,
+		Weak.Name:   &Weak,
+		Fast.Name:   &Fast,
 	},
 }
 
@@ -67,8 +67,11 @@ var Flame types.SpiritTemplate = types.SpiritTemplate{
 		spiritTypes[2]: lowDEF,
 		spiritTypes[3]: lowDEF,
 	},
-	Moves: []*types.Move{
-		&Switch,
+	Moves: map[string]*types.Move{
+		Switch.Name: &Switch,
+		Strong.Name: &Strong,
+		Weak.Name:   &Weak,
+		Fast.Name:   &Fast,
 	},
 }
 
@@ -86,7 +89,10 @@ var Hive types.SpiritTemplate = types.SpiritTemplate{
 		spiritTypes[2]: highDEF,
 		spiritTypes[3]: lowDEF,
 	},
-	Moves: []*types.Move{
-		&Switch,
+	Moves: map[string]*types.Move{
+		Switch.Name: &Switch,
+		Strong.Name: &Strong,
+		Weak.Name:   &Weak,
+		Fast.Name:   &Fast,
 	},
 }

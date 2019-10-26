@@ -3,9 +3,8 @@ package gameplay
 import (
 	"encoding/json"
 	"errors"
+	"fmt"
 	"io/ioutil"
-	"log"
-	"mytholojam/server/resources"
 	"mytholojam/server/types"
 	"net/http"
 	"sort"
@@ -14,8 +13,6 @@ import (
 )
 
 func ActionHandler(w http.ResponseWriter, r *http.Request) {
-	log.Printf("Take action request received")
-
 	vars := mux.Vars(r)
 	gameID := vars["gameID"]
 
@@ -28,6 +25,8 @@ func ActionHandler(w http.ResponseWriter, r *http.Request) {
 	g := gameList[gameID]
 	g.Lock.Lock()
 	defer g.Lock.Unlock()
+
+	print(g, "Take action request received")
 
 	b, _ := ioutil.ReadAll(r.Body)
 	defer r.Body.Close()
@@ -52,15 +51,19 @@ func takeAction(g *types.Game, payload *types.ActionPayload) (error, int) {
 
 	p := g.Players[payload.Token]
 
+	// debug("validating actions")
 	err, code := validateActions(g, p, payload.Actions)
 
 	if err != nil {
+		// debug(err)
 		return err, code
 	}
 
+	// debug("Actions are valid")
 	p.NextActions = payload.Actions
 
 	if g.Player1.NextActions != nil && g.Player2.NextActions != nil {
+		// debug("Actions submitted, calculating order")
 		calculateActionOrder(g)
 		g.TurnCount++
 	}
@@ -94,10 +97,10 @@ func validateSingleAction(g *types.Game, p *types.Player, a *types.Action) (erro
 
 	var teamTargeted map[string]*types.Equipment
 	op := p.Opponent
-	a.User = p.Spirits[a.User.ID]            // ensure client can't submit fake spirit stats
-	a.Move = resources.MoveList[a.Move.Name] // ensure client can't submit fake moves
+	a.User = p.Spirits[a.User.ID]      // ensure client can't submit fake spirit stats
+	a.Move = a.User.Moves[a.Move.Name] // ensure client can't submit fake moves
 
-	if len(a.Targets) == 0 || len(a.Targets) > 1 && !a.Move.MultiTarget {
+	if len(a.Targets) == 0 || (len(a.Targets) > 1 && !a.Move.MultiTarget) {
 		return errors.New("Invalid action2.\n"), 400
 	}
 
@@ -146,9 +149,12 @@ func calculateActionOrder(g *types.Game) {
 
 	g.ActionOrder = append(g.ActionOrder, actions...)
 	g.NumActions += len(actions)
+
+	g.Player1.NextActions = nil
+	g.Player2.NextActions = nil
 }
 
-func applyEffect(_ *types.Game, a *types.Action) {
+func applyEffect(g *types.Game, a *types.Action) {
 	for _, t := range a.Targets {
 		var target types.Damageable
 
@@ -158,10 +164,12 @@ func applyEffect(_ *types.Game, a *types.Action) {
 			target = t
 		}
 
-		damage := calculateDamage(a.User, target, a.Move)
+		damage := CalculateDamage(a.User, target, a.Move)
 		damageDone := applyCallbacks(a.User, target, a.Move, damage)
 
-		log.Println(a.User.Name, "uses", a.Move.Name, "on", target.GetName(), "for", damageDone, "damage.")
+		str := fmt.Sprintf("%v uses %v on %v for %v damage\n", a.User.Name, a.Move.Name, target.GetName(), damageDone)
+		a.ActionText += str
+		print(g, str)
 	}
 }
 
@@ -177,7 +185,7 @@ func applyCallbacks(user *types.Spirit, target types.Damageable, move *types.Mov
 	return hpBefore - hpAfter
 }
 
-func calculateDamage(user *types.Spirit, target types.Damageable, move *types.Move) int {
+func CalculateDamage(user *types.Spirit, target types.Damageable, move *types.Move) int {
 	effAtk := user.ATK + move.Power
 	damage := effAtk - target.GetDef(move.Type)
 

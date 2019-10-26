@@ -2,7 +2,7 @@
 
 ## Usage
 
-Docker repos is available at https://hub.docker.com/r/aopal/mytholojam
+Docker repo is available at https://hub.docker.com/r/aopal/mytholojam
 
 ### Running the client
 
@@ -41,3 +41,8 @@ Build & run client:`./c`
 Build & run client docker container `script/docker-start-client`
 
 Both scripts accept and optional argument to set the URL of the server. Default server address is `http://localhost:8080` / `http://host.docker.internal:8080`
+
+
+### Running tests
+
+`script/run-tests` to run tests, `script/coverage` to see line-by-line code coverage

@@ -2,6 +2,7 @@ package gameplay
 
 import (
 	"fmt"
+	"log"
 	"mytholojam/server/resources"
 	"mytholojam/server/types"
 	"sync"
@@ -43,3 +44,9 @@ func debugf(format string, a ...interface{}) {
 func debug(a interface{}) {
 	debugf("%v", a)
 }
+
+func print(g *types.Game, format string, a ...interface{}) {
+	log.Printf("[game: "+g.GameID+"] "+format, a...)
+}
+
+// func printline()

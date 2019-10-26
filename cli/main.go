@@ -18,7 +18,7 @@ func main() {
 	reader := bufio.NewReader(os.Stdin)
 
 	fmt.Println("****************************************")
-	fmt.Println("Type 'exit' or hit Ctrl+C to exit")
+	fmt.Println("Type 'quit' or hit Ctrl+C to quit")
 	fmt.Println("Type 'help' to see a list of commands")
 
 	exit := false
@@ -36,7 +36,7 @@ func handleInput(words []string) bool {
 	switch words[0] {
 	case "help", "h":
 		help()
-	case "exit", "e":
+	case "quit", "q":
 		return true
 	case "make", "m":
 		if len(words) != 2 {
@@ -58,6 +58,9 @@ func handleInput(words []string) bool {
 	case "opponent", "o":
 		status()
 		printOpponentTeam()
+	case "events", "e":
+		status()
+		printEvents()
 	case "act", "a":
 		if len(words) != 4 {
 			fmt.Printf("Error: Command requires 4 inputs\n\n")

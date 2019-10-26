@@ -2,7 +2,6 @@ package gameplay
 
 import (
 	"errors"
-	"log"
 	"mytholojam/server/types"
 	"net/http"
 	"strconv"
@@ -11,8 +10,6 @@ import (
 )
 
 func StatusHandler(w http.ResponseWriter, r *http.Request) {
-	log.Printf("Status request received")
-
 	vars := mux.Vars(r)
 	gameID := vars["gameID"]
 	numActionsSeen, _ := strconv.Atoi(vars["actionCounter"])
@@ -26,6 +23,8 @@ func StatusHandler(w http.ResponseWriter, r *http.Request) {
 	g := gameList[gameID]
 	g.Lock.RLock()
 	defer g.Lock.RUnlock()
+
+	print(g, "Status request received")
 
 	status, err, code := getStatus(g, numActionsSeen)
 
@@ -44,7 +43,6 @@ func getStatus(g *types.Game, numActionsSeen int) (string, error, int) {
 
 	status, err := g.ToJSON(numActionsSeen)
 	if err != nil {
-		log.Println(err)
 		return "", errors.New("Could not get status.\n"), 500
 	}
 

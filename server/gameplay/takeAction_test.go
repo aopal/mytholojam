@@ -73,17 +73,17 @@ func TestActions(t *testing.T) {
 	assert.Assert(t, p2.Equipment["Shield"].InhabitedBy == nil)
 	assert.Assert(t, p2.Equipment["Bow"].InhabitedBy == p2.Spirits["Thief"])
 
-	p1a1Damage := calculateDamage(
+	p1a1Damage := CalculateDamage(
 		p1act.Actions[0].User,
 		p1act.Actions[0].Targets[0].InhabitedBy,
 		p1act.Actions[0].Move,
 	)
-	p1a2Damage := calculateDamage(
+	p1a2Damage := CalculateDamage(
 		p1act.Actions[1].User,
 		p1act.Actions[1].Targets[0],
 		p1act.Actions[1].Move,
 	)
-	p2a1Damage := calculateDamage(
+	p2a1Damage := CalculateDamage(
 		p2act.Actions[0].User,
 		p2act.Actions[0].Targets[0].InhabitedBy,
 		p2act.Actions[0].Move,
