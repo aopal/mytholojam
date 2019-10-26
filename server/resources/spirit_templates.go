@@ -11,7 +11,7 @@ var SpiritList map[string]*types.SpiritTemplate = map[string]*types.SpiritTempla
 var Warrior types.SpiritTemplate = types.SpiritTemplate{
 	Name:   "Warrior",
 	MaxHP:  highHP,
-	ATK:    highATK,
+	ATK:    avgATK,
 	Speed:  avgSPD,
 	OnHit:  defaultOnHit,
 	OnMiss: noop,
@@ -33,7 +33,7 @@ var Warrior types.SpiritTemplate = types.SpiritTemplate{
 var Thief types.SpiritTemplate = types.SpiritTemplate{
 	Name:   "Thief",
 	MaxHP:  lowHP,
-	ATK:    highATK,
+	ATK:    avgATK,
 	Speed:  highSPD,
 	OnHit:  defaultOnHit,
 	OnMiss: noop,
@@ -49,5 +49,46 @@ var Thief types.SpiritTemplate = types.SpiritTemplate{
 		&Switch,
 		&Weak,
 		&Fast,
+	},
+}
+
+// FIRST PASS SPIRITS
+var Flame types.SpiritTemplate = types.SpiritTemplate{
+	Name:   "Flame",
+	MaxHP:  highHP,
+	ATK:    avgATK,
+	Speed:  avgSPD,
+	OnHit:  defaultOnHit,
+	OnMiss: noop,
+	OnDbl:  noop,
+	Defs: map[string]int{
+		spiritTypes[0]: midloDEF,
+		spiritTypes[1]: infDEF,
+		spiritTypes[2]: lowDEF,
+		spiritTypes[3]: lowDEF,
+		switchType:     switchDEF,
+	},
+	Moves: []*types.Move{
+		&Switch,
+	},
+}
+
+var Hive types.SpiritTemplate = types.SpiritTemplate{
+	Name:   "Hive",
+	MaxHP:  highHP,
+	ATK:    avgATK,
+	Speed:  avgSPD,
+	OnHit:  defaultOnHit,
+	OnMiss: noop,
+	OnDbl:  noop,
+	Defs: map[string]int{
+		spiritTypes[0]: midhiDEF,
+		spiritTypes[1]: midloDEF,
+		spiritTypes[2]: highDEF,
+		spiritTypes[3]: lowDEF,
+		switchType:     switchDEF,
+	},
+	Moves: []*types.Move{
+		&Switch,
 	},
 }

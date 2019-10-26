@@ -15,13 +15,22 @@ const lowHP = 2
 const avgHP = 3
 const highHP = 4
 
-const lowATK = 1
-const avgATK = 2
-const highATK = 3
+const lowATK = -1
+const avgATK = 0
+const highATK = 1
 
-const lowDEF = 1
-const avgDEF = 2
-const highDEF = 3 // something something 1080p
+const lowPWR = 1
+const midloPWR = 2
+const avgPWR = 3
+const midhiPWR = 4
+const highPWR = 5
+
+const lowDEF = 2
+const midloDEF = 3
+const avgDEF = 4
+const midhiDEF = 5
+const highDEF = 6 // something something 1080p
+const infDEF = 9999
 
 const lowWeight = 1
 const avgWeight = 2
@@ -31,12 +40,10 @@ const lowSPD = 1
 const avgSPD = 2
 const highSPD = 3
 
-const lowPWR = 1
-const avgPWR = 2
-const highPWR = 3
-
 const lowPri = -1
 const avgPri = 0
 const highPri = 1
+const counterDefPri = 2
+const defensivePri = 3
 
 const recoilDamage = 1

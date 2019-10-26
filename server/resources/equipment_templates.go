@@ -64,3 +64,94 @@ var Bow types.EquipmentTemplate = types.EquipmentTemplate{
 	},
 	Moves: []*types.Move{},
 }
+
+// FIRST PASS EQUIPMENT
+var AngloSaxonSpear types.EquipmentTemplate = types.EquipmentTemplate{
+	Name:   "AngloSaxonSpear",
+	MaxHP:  avgHP,
+	ATK:    avgATK,
+	Weight: avgWeight,
+	OnHit:  defaultOnHit,
+	OnMiss: noop,
+	OnDbl:  noop,
+	Defs: map[string]int{
+		spiritTypes[0]: midhiDEF,
+		spiritTypes[1]: midloDEF,
+		spiritTypes[2]: avgDEF,
+		spiritTypes[3]: avgDEF,
+		switchType:     switchDEF,
+	},
+	Moves: []*types.Move{},
+}
+
+var DanishNeedleSet types.EquipmentTemplate = types.EquipmentTemplate{
+	Name:   "DanishNeedleSet",
+	MaxHP:  avgHP,
+	ATK:    avgATK,
+	Weight: avgWeight,
+	OnHit:  defaultOnHit,
+	OnMiss: noop,
+	OnDbl:  noop,
+	Defs: map[string]int{
+		spiritTypes[0]: midloDEF,
+		spiritTypes[1]: highDEF,
+		spiritTypes[2]: highDEF,
+		spiritTypes[3]: avgDEF,
+		switchType:     switchDEF,
+	},
+	Moves: []*types.Move{},
+}
+
+var ArthiRod types.EquipmentTemplate = types.EquipmentTemplate{
+	Name:   "ArthiRod",
+	MaxHP:  avgHP,
+	ATK:    avgATK,
+	Weight: avgWeight,
+	OnHit:  defaultOnHit,
+	OnMiss: noop,
+	OnDbl:  noop,
+	Defs: map[string]int{
+		spiritTypes[0]: avgDEF,
+		spiritTypes[1]: lowDEF,
+		spiritTypes[2]: midloDEF,
+		spiritTypes[3]: midhiDEF,
+		switchType:     switchDEF,
+	},
+	Moves: []*types.Move{},
+}
+
+var IberianGoatSkull types.EquipmentTemplate = types.EquipmentTemplate{
+	Name:   "IberianGoatSkull",
+	MaxHP:  avgHP,
+	ATK:    avgATK,
+	Weight: avgWeight,
+	OnHit:  defaultOnHit,
+	OnMiss: noop,
+	OnDbl:  noop,
+	Defs: map[string]int{
+		spiritTypes[0]: midloDEF,
+		spiritTypes[1]: highDEF,
+		spiritTypes[2]: highDEF,
+		spiritTypes[3]: lowDEF,
+		switchType:     switchDEF,
+	},
+	Moves: []*types.Move{},
+}
+
+var AttisCrown types.EquipmentTemplate = types.EquipmentTemplate{
+	Name:   "AttisCrown",
+	MaxHP:  avgHP,
+	ATK:    avgATK,
+	Weight: avgWeight,
+	OnHit:  defaultOnHit,
+	OnMiss: noop,
+	OnDbl:  noop,
+	Defs: map[string]int{
+		spiritTypes[0]: avgDEF,
+		spiritTypes[1]: lowDEF,
+		spiritTypes[2]: avgDEF,
+		spiritTypes[3]: highDEF,
+		switchType:     switchDEF,
+	},
+	Moves: []*types.Move{},
+}
