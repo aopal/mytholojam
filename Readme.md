@@ -1,9 +1,43 @@
-# Readme
+# mytholojam
+
+## Usage
+
+Docker repos is available at https://hub.docker.com/r/aopal/mytholojam
+
+### Running the client
+
+
+```bash
+docker pull aopal/mytholojam:client-latest
+server="http://host.docker.internal:8080" # configure
+docker run -it aopal/mytholojam:client-latest $server
+```
+
+### Running the server
+
+```bash
+docker pull aopal/mytholojam:server-latest
+port=8080 # configure
+docker run -d -p $port:8080 aopal/mytholojam:server-latest
+```
+
+
+## Development
 
 Requires golang https://golang.org/
 
-Build with `go build -o bin/mytholojam-server`
+### Running the server
 
-Run with `./bin/mytholojam-server`
+Build & run server: `./s`
 
-Docker container, if desired, can be built with `docker build -t mytholojam-server .` and run with `docker run -d -p 8080:8080 mytholojam-server`
+Build & run server docker container `bin/docker-start-server`
+
+Both scripts accept an optional argument to set the port of the server. Default port is `8080` otherwise
+
+### Running the command line client
+
+Build & run client:`./c`
+
+Build & run client docker container `bin/docker-start-client`
+
+Both scripts accept and optional argument to set the URL of the server. Default server address is `http://localhost:8080` / `http://host.docker.internal:8080`

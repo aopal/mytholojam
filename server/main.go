@@ -2,6 +2,7 @@ package main
 
 import (
 	"context"
+	"fmt"
 	"log"
 	"mytholojam/server/gameplay"
 	"net/http"
@@ -31,9 +32,18 @@ func main() {
 
 	gameplay.Init()
 
+	var port string
+
+	if len(os.Args) < 2 {
+		fmt.Println("No port given, defaulting to 8080")
+		port = "8080"
+	} else {
+		port = os.Args[1]
+	}
+
 	srv := &http.Server{
 		Handler:      r,
-		Addr:         ":8080",
+		Addr:         ":" + port,
 		ReadTimeout:  10 * time.Second,
 		WriteTimeout: 10 * time.Second,
 	}
