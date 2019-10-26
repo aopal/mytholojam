@@ -18,9 +18,9 @@ type Equipment struct {
 	Inhabited     bool           `json:"inhabited"`
 	InhabitedBy   *Spirit        `json:"inhabitedBy"`
 	InhabitedById string         `json:"inhabitedById"`
-	onHit         Callback
-	onMiss        Callback
-	onDbl         Callback
+	onHit         *CallbackArray
+	onMiss        *CallbackArray
+	onDbl         *CallbackArray
 }
 
 type EquipmentTemplate struct {
@@ -30,9 +30,9 @@ type EquipmentTemplate struct {
 	Defs   map[string]int `json:"defenses"`
 	Weight int            `json:"weight"`
 	Moves  []*Move        `json:"moves"`
-	OnHit  Callback       `json:"-"`
-	OnMiss Callback       `json:"-"`
-	OnDbl  Callback       `json:"-"`
+	OnHit  *CallbackArray `json:"-"`
+	OnMiss *CallbackArray `json:"-"`
+	OnDbl  *CallbackArray `json:"-"`
 }
 
 func (e *Equipment) GetID() string             { return e.ID }
@@ -43,15 +43,21 @@ func (e *Equipment) TakeDamage(dmg int)        { e.HP -= dmg }
 func (e *Equipment) GetEquipment() *Equipment  { return e }
 
 func (e *Equipment) OnHit(user *Spirit, target Damageable, move *Move, damage int) {
-	e.onHit(user, target, move, damage)
+	for _, f := range *e.onHit {
+		(*f)(user, target, move, damage)
+	}
 }
 
 func (e *Equipment) OnMiss(user *Spirit, target Damageable, move *Move, damage int) {
-	e.onMiss(user, target, move, damage)
+	for _, f := range *e.onMiss {
+		(*f)(user, target, move, damage)
+	}
 }
 
 func (e *Equipment) OnDbl(user *Spirit, target Damageable, move *Move, damage int) {
-	e.onDbl(user, target, move, damage)
+	for _, f := range *e.onDbl {
+		(*f)(user, target, move, damage)
+	}
 }
 
 func (e *Equipment) MarshalJSON() ([]byte, error) {

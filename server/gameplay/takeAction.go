@@ -3,6 +3,7 @@ package gameplay
 import (
 	"encoding/json"
 	"errors"
+	"fmt"
 	"io/ioutil"
 	"log"
 	"mytholojam/server/resources"
@@ -32,7 +33,10 @@ func ActionHandler(w http.ResponseWriter, r *http.Request) {
 	b, _ := ioutil.ReadAll(r.Body)
 	defer r.Body.Close()
 
-	err, code := takeAction(g, b)
+	var payload types.ActionPayload
+	json.Unmarshal(b, &payload)
+
+	err, code := takeAction(g, &payload)
 
 	if err != nil {
 		w.WriteHeader(code)
@@ -42,11 +46,7 @@ func ActionHandler(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
-func takeAction(g *types.Game, body []byte) (error, int) {
-	var payload types.ActionPayload
-
-	json.Unmarshal(body, &payload)
-
+func takeAction(g *types.Game, payload *types.ActionPayload) (error, int) {
 	if payload.Token != g.Player1.ID && payload.Token != g.Player2.ID {
 		return errors.New("Invalid token.\n"), 401
 	}
@@ -159,16 +159,22 @@ func applyEffect(_ *types.Game, a *types.Action) {
 		}
 
 		damage := calculateDamage(a.User, target, a.Move)
-
-		hpBefore := target.GetHP()
-		a.Move.OnHit(a.User, target, a.Move, damage)
-		target.OnHit(a.User, target, a.Move, damage)
-		hpAfter := target.GetHP()
-
-		damageDone := hpBefore - hpAfter
+		damageDone := applyCallbacks(a.User, target, a.Move, damage)
 
 		log.Println(a.User.Name, "uses", a.Move.Name, "on", target.GetName(), "for", damageDone, "damage.")
 	}
+}
+
+func applyCallbacks(user *types.Spirit, target types.Damageable, move *types.Move, damage int) int {
+	hpBefore := target.GetHP()
+
+	move.OnHit(user, target, move, damage)
+	target.OnHit(user, target, move, damage)
+	user.OnHit(user, target, move, damage)
+
+	hpAfter := target.GetHP()
+
+	return hpBefore - hpAfter
 }
 
 func calculateDamage(user *types.Spirit, target types.Damageable, move *types.Move) int {
@@ -178,6 +184,12 @@ func calculateDamage(user *types.Spirit, target types.Damageable, move *types.Mo
 	if damage < 0 {
 		damage = 0
 	}
+
+	fmt.Println(user)
+	fmt.Println(target)
+	fmt.Println(move)
+	fmt.Println(damage)
+	fmt.Println("------------")
 
 	return damage
 }

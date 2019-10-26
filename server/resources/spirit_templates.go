@@ -5,6 +5,8 @@ import "mytholojam/server/types"
 var SpiritList map[string]*types.SpiritTemplate = map[string]*types.SpiritTemplate{
 	Warrior.Name: &Warrior,
 	Thief.Name:   &Thief,
+	Flame.Name:   &Flame,
+	Hive.Name:    &Hive,
 }
 
 // SAMPLE SPIRITS
@@ -13,9 +15,9 @@ var Warrior types.SpiritTemplate = types.SpiritTemplate{
 	MaxHP:  highHP,
 	ATK:    avgATK,
 	Speed:  avgSPD,
-	OnHit:  defaultOnHit,
-	OnMiss: noop,
-	OnDbl:  noop,
+	OnHit:  empty,
+	OnMiss: empty,
+	OnDbl:  empty,
 	Defs: map[string]int{
 		spiritTypes[0]: lowDEF,
 		spiritTypes[1]: avgDEF,
@@ -35,9 +37,9 @@ var Thief types.SpiritTemplate = types.SpiritTemplate{
 	MaxHP:  lowHP,
 	ATK:    avgATK,
 	Speed:  highSPD,
-	OnHit:  defaultOnHit,
-	OnMiss: noop,
-	OnDbl:  noop,
+	OnHit:  empty,
+	OnMiss: empty,
+	OnDbl:  empty,
 	Defs: map[string]int{
 		spiritTypes[0]: lowDEF,
 		spiritTypes[1]: avgDEF,
@@ -58,9 +60,9 @@ var Flame types.SpiritTemplate = types.SpiritTemplate{
 	MaxHP:  highHP,
 	ATK:    avgATK,
 	Speed:  avgSPD,
-	OnHit:  defaultOnHit,
-	OnMiss: noop,
-	OnDbl:  noop,
+	OnHit:  empty,
+	OnMiss: empty,
+	OnDbl:  empty,
 	Defs: map[string]int{
 		spiritTypes[0]: midloDEF,
 		spiritTypes[1]: infDEF,
@@ -78,9 +80,9 @@ var Hive types.SpiritTemplate = types.SpiritTemplate{
 	MaxHP:  highHP,
 	ATK:    avgATK,
 	Speed:  avgSPD,
-	OnHit:  defaultOnHit,
-	OnMiss: noop,
-	OnDbl:  noop,
+	OnHit:  empty,
+	OnMiss: empty,
+	OnDbl:  empty,
 	Defs: map[string]int{
 		spiritTypes[0]: midhiDEF,
 		spiritTypes[1]: midloDEF,

@@ -16,6 +16,15 @@ type Game struct {
 	Lock        sync.RWMutex       `json:"-"`
 }
 
+func NewGame(gameID string) *Game {
+	return &Game{
+		GameID:      gameID,
+		Players:     make(map[string]*Player),
+		ActionOrder: make([]*Action, 0),
+		TurnCount:   0,
+	}
+}
+
 func (g *Game) ToJSON(numActionsSeen int) ([]byte, error) {
 	return json.Marshal(&struct {
 		GameID     string    `json:"gameID"`

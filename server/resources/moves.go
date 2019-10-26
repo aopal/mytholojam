@@ -17,9 +17,11 @@ var Switch types.Move = types.Move{
 	Priority:       switchPri,
 	MultiTarget:    false,
 	TeamTargetable: selfTarget,
-	OnHit:          switchOnHit,
-	OnMiss:         noop,
-	OnDbl:          noop,
+	OnHitFuncs: &types.CallbackArray{
+		&switchOnHit,
+	},
+	OnMissFuncs: empty,
+	OnDblFuncs:  empty,
 }
 
 var Strong types.Move = types.Move{
@@ -29,9 +31,12 @@ var Strong types.Move = types.Move{
 	Priority:       avgPri,
 	MultiTarget:    false,
 	TeamTargetable: opTarget,
-	OnHit:          defaultRecoil,
-	OnMiss:         noop,
-	OnDbl:          noop,
+	OnHitFuncs: &types.CallbackArray{
+		&defaultOnHit,
+		&defaultRecoil,
+	},
+	OnMissFuncs: empty,
+	OnDblFuncs:  empty,
 }
 
 var Weak types.Move = types.Move{
@@ -41,9 +46,9 @@ var Weak types.Move = types.Move{
 	Priority:       avgPri,
 	MultiTarget:    true,
 	TeamTargetable: opTarget,
-	OnHit:          noop,
-	OnMiss:         noop,
-	OnDbl:          noop,
+	OnHitFuncs:     defaultOnHitArr,
+	OnMissFuncs:    empty,
+	OnDblFuncs:     empty,
 }
 
 var Fast types.Move = types.Move{
@@ -53,7 +58,7 @@ var Fast types.Move = types.Move{
 	Priority:       highPri,
 	MultiTarget:    false,
 	TeamTargetable: opTarget,
-	OnHit:          noop,
-	OnMiss:         noop,
-	OnDbl:          noop,
+	OnHitFuncs:     defaultOnHitArr,
+	OnMissFuncs:    empty,
+	OnDblFuncs:     empty,
 }

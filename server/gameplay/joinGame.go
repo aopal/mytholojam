@@ -6,7 +6,6 @@ import (
 	"mytholojam/server/types"
 	"net/http"
 
-	"github.com/google/uuid"
 	"github.com/gorilla/mux"
 )
 
@@ -41,25 +40,14 @@ func joinGame(g *types.Game) (error, int) {
 		return errors.New("Game already full.\n"), 400
 	}
 
-	player2Token, err := uuid.NewRandom()
-	if err != nil {
-		return errors.New("Could not join game.\n"), 500
-	}
+	p2, _ := types.NewPlayer()
+	initializeDummyPlayer(p2)
 
-	p2 := types.Player{
-		Equipment:   make(map[string]*types.Equipment),
-		Spirits:     make(map[string]*types.Spirit),
-		ID:          player2Token.String(),
-		NextActions: nil,
-	}
-
-	g.Players[p2.ID] = &p2
-	g.Player2 = &p2
-
-	initializeDummyPlayer2(&p2)
+	g.Players[p2.ID] = p2
+	g.Player2 = p2
 
 	p2.Opponent = g.Player1
-	g.Player1.Opponent = &p2
+	g.Player1.Opponent = p2
 
 	return nil, 200
 }

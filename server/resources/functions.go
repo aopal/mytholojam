@@ -4,6 +4,9 @@ import (
 	"mytholojam/server/types"
 )
 
+var empty *types.CallbackArray = &types.CallbackArray{}
+var defaultOnHitArr = &types.CallbackArray{&defaultOnHit}
+
 var noop types.Callback = func(_ *types.Spirit, _ types.Damageable, _ *types.Move, _ int) {}
 
 var switchOnHit types.Callback = func(user *types.Spirit, target types.Damageable, _ *types.Move, _ int) {
@@ -16,5 +19,5 @@ var defaultOnHit types.Callback = func(_ *types.Spirit, target types.Damageable,
 }
 
 var defaultRecoil types.Callback = func(user *types.Spirit, _ types.Damageable, _ *types.Move, _ int) {
-	user.TakeDamage(recoilDamage)
+	user.TakeDamage(RecoilDamage)
 }

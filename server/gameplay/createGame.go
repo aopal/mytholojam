@@ -1,13 +1,11 @@
 package gameplay
 
 import (
-	"errors"
 	"log"
 	"net/http"
 
 	"mytholojam/server/types"
 
-	"github.com/google/uuid"
 	"github.com/gorilla/mux"
 )
 
@@ -36,32 +34,18 @@ func CreateHandler(w http.ResponseWriter, r *http.Request) {
 }
 
 func createGame(gameID string) (*types.Game, error, int) {
-	player1Token, err := uuid.NewRandom()
-	if err != nil {
-		return nil, errors.New("Could not create game.\n"), 500
-	}
+	g := types.NewGame(gameID)
 
-	g := types.Game{
-		GameID:      gameID,
-		Players:     make(map[string]*types.Player),
-		ActionOrder: make([]*types.Action, 0),
-		TurnCount:   0,
-	}
 	g.Lock.Lock()
 	defer g.Lock.Unlock()
 
-	gameList[gameID] = &g
+	gameList[gameID] = g
 
-	p1 := types.Player{
-		Equipment:   make(map[string]*types.Equipment),
-		Spirits:     make(map[string]*types.Spirit),
-		ID:          player1Token.String(),
-		NextActions: nil,
-	}
-	g.Players[p1.ID] = &p1
-	g.Player1 = &p1
+	p1, _ := types.NewPlayer()
+	initializeDummyPlayer(p1)
 
-	initializeDummyPlayer1(&p1)
+	g.Players[p1.ID] = p1
+	g.Player1 = p1
 
-	return &g, nil, 200
+	return g, nil, 200
 }

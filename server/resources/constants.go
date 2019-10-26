@@ -46,4 +46,4 @@ const highPri = 1
 const counterDefPri = 2
 const defensivePri = 3
 
-const recoilDamage = 1
+const RecoilDamage = 1
