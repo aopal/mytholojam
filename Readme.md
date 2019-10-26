@@ -30,7 +30,7 @@ Requires golang https://golang.org/
 
 Build & run server: `./s`
 
-Build & run server docker container `bin/docker-start-server`
+Build & run server docker container `script/docker-start-server`
 
 Both scripts accept an optional argument to set the port of the server. Default port is `8080` otherwise
 
@@ -38,6 +38,6 @@ Both scripts accept an optional argument to set the port of the server. Default 
 
 Build & run client:`./c`
 
-Build & run client docker container `bin/docker-start-client`
+Build & run client docker container `script/docker-start-client`
 
 Both scripts accept and optional argument to set the URL of the server. Default server address is `http://localhost:8080` / `http://host.docker.internal:8080`

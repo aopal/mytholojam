@@ -4,9 +4,8 @@ package resources
 const switchType = "SWITCH"
 const switchPower = 0
 const switchPri = 100
-const switchDEF = 100
 
-var spiritTypes = []string{"STRN", "FLAM", "WEAR", "NAME", switchType}
+var spiritTypes = []string{"STRN", "FLAM", "WEAR", "NAME"}
 
 const selfTarget = "self"
 const opTarget = "other"

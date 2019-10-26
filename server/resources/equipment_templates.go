@@ -29,7 +29,6 @@ var Sword types.EquipmentTemplate = types.EquipmentTemplate{
 		spiritTypes[1]: lowDEF,
 		spiritTypes[2]: lowDEF,
 		spiritTypes[3]: lowDEF,
-		switchType:     switchDEF,
 	},
 	Moves: []*types.Move{},
 }
@@ -47,7 +46,6 @@ var Shield types.EquipmentTemplate = types.EquipmentTemplate{
 		spiritTypes[1]: highDEF,
 		spiritTypes[2]: highDEF,
 		spiritTypes[3]: lowDEF,
-		switchType:     switchDEF,
 	},
 	Moves: []*types.Move{},
 }
@@ -65,7 +63,6 @@ var Bow types.EquipmentTemplate = types.EquipmentTemplate{
 		spiritTypes[1]: lowDEF,
 		spiritTypes[2]: lowDEF,
 		spiritTypes[3]: avgDEF,
-		switchType:     switchDEF,
 	},
 	Moves: []*types.Move{},
 }
@@ -84,7 +81,6 @@ var AngloSaxonSpear types.EquipmentTemplate = types.EquipmentTemplate{
 		spiritTypes[1]: midloDEF,
 		spiritTypes[2]: avgDEF,
 		spiritTypes[3]: avgDEF,
-		switchType:     switchDEF,
 	},
 	Moves: []*types.Move{},
 }
@@ -102,7 +98,6 @@ var DanishNeedleSet types.EquipmentTemplate = types.EquipmentTemplate{
 		spiritTypes[1]: highDEF,
 		spiritTypes[2]: highDEF,
 		spiritTypes[3]: avgDEF,
-		switchType:     switchDEF,
 	},
 	Moves: []*types.Move{},
 }
@@ -120,7 +115,6 @@ var ArthiRod types.EquipmentTemplate = types.EquipmentTemplate{
 		spiritTypes[1]: lowDEF,
 		spiritTypes[2]: midloDEF,
 		spiritTypes[3]: midhiDEF,
-		switchType:     switchDEF,
 	},
 	Moves: []*types.Move{},
 }
@@ -138,7 +132,6 @@ var IberianGoatSkull types.EquipmentTemplate = types.EquipmentTemplate{
 		spiritTypes[1]: highDEF,
 		spiritTypes[2]: highDEF,
 		spiritTypes[3]: lowDEF,
-		switchType:     switchDEF,
 	},
 	Moves: []*types.Move{},
 }
@@ -156,7 +149,6 @@ var AttisCrown types.EquipmentTemplate = types.EquipmentTemplate{
 		spiritTypes[1]: lowDEF,
 		spiritTypes[2]: avgDEF,
 		spiritTypes[3]: highDEF,
-		switchType:     switchDEF,
 	},
 	Moves: []*types.Move{},
 }

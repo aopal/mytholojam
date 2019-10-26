@@ -17,8 +17,8 @@ var Switch types.Move = types.Move{
 	Priority:       switchPri,
 	MultiTarget:    false,
 	TeamTargetable: selfTarget,
-	OnHitFuncs: &types.CallbackArray{
-		&switchOnHit,
+	OnHitFuncs: types.CallbackArray{
+		switchOnHit,
 	},
 	OnMissFuncs: empty,
 	OnDblFuncs:  empty,
@@ -31,9 +31,9 @@ var Strong types.Move = types.Move{
 	Priority:       avgPri,
 	MultiTarget:    false,
 	TeamTargetable: opTarget,
-	OnHitFuncs: &types.CallbackArray{
-		&defaultOnHit,
-		&defaultRecoil,
+	OnHitFuncs: types.CallbackArray{
+		defaultOnHit,
+		defaultRecoil,
 	},
 	OnMissFuncs: empty,
 	OnDblFuncs:  empty,

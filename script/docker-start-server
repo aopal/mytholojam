@@ -1,0 +1,12 @@
+#!/bin/bash -e
+
+port=$1
+
+if [ -z "$port" ]; then
+  port="8080"
+fi
+
+set -x
+
+docker build -t mytholojam-server -f server.Dockerfile .
+docker run -d -p $port:8080 mytholojam-server

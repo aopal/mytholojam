@@ -1,6 +1,7 @@
 package gameplay
 
 import (
+	"fmt"
 	"mytholojam/server/resources"
 	"mytholojam/server/types"
 	"sync"
@@ -22,7 +23,6 @@ func initializeDummyPlayer(p *types.Player) {
 
 	s1 := resources.SpiritList["Flame"].NewSpirit()
 	s2 := resources.SpiritList["Hive"].NewSpirit()
-
 	p.Equipment[e1.ID] = e1
 	p.Equipment[e2.ID] = e2
 	p.Equipment[e3.ID] = e3
@@ -34,4 +34,12 @@ func initializeDummyPlayer(p *types.Player) {
 
 	s1.Inhabit(e1)
 	s2.Inhabit(e2)
+}
+
+func debugf(format string, a ...interface{}) {
+	fmt.Printf(format+"\n", a...)
+}
+
+func debug(a interface{}) {
+	debugf("%v", a)
 }

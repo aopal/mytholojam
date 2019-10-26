@@ -1,0 +1,12 @@
+#!/bin/bash -e
+
+server=$1
+
+if [ -z "$server" ]; then
+  server="http://host.docker.internal:8080"
+fi
+
+set -x
+
+docker build -t mytholojam-client -f client.Dockerfile  .
+docker run -it mytholojam-client $server

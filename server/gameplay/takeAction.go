@@ -3,7 +3,6 @@ package gameplay
 import (
 	"encoding/json"
 	"errors"
-	"fmt"
 	"io/ioutil"
 	"log"
 	"mytholojam/server/resources"
@@ -63,6 +62,7 @@ func takeAction(g *types.Game, payload *types.ActionPayload) (error, int) {
 
 	if g.Player1.NextActions != nil && g.Player2.NextActions != nil {
 		calculateActionOrder(g)
+		g.TurnCount++
 	}
 
 	return nil, 200
@@ -184,12 +184,6 @@ func calculateDamage(user *types.Spirit, target types.Damageable, move *types.Mo
 	if damage < 0 {
 		damage = 0
 	}
-
-	fmt.Println(user)
-	fmt.Println(target)
-	fmt.Println(move)
-	fmt.Println(damage)
-	fmt.Println("------------")
 
 	return damage
 }

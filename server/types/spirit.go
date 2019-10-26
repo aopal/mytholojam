@@ -17,9 +17,9 @@ type Spirit struct {
 	Moves        []*Move        `json:"moves"`
 	Inhabiting   *Equipment     `json:"inhabiting"`
 	InhabitingId string         `json:"inhabitingId"`
-	onHit        *CallbackArray
-	onMiss       *CallbackArray
-	onDbl        *CallbackArray
+	onHit        CallbackArray
+	onMiss       CallbackArray
+	onDbl        CallbackArray
 }
 
 type SpiritTemplate struct {
@@ -29,9 +29,9 @@ type SpiritTemplate struct {
 	Defs   map[string]int `json:"defenses"`
 	Speed  int            `json:"speed"`
 	Moves  []*Move        `json:"moves"`
-	OnHit  *CallbackArray `json:"-"`
-	OnMiss *CallbackArray `json:"-"`
-	OnDbl  *CallbackArray `json:"-"`
+	OnHit  CallbackArray  `json:"-"`
+	OnMiss CallbackArray  `json:"-"`
+	OnDbl  CallbackArray  `json:"-"`
 }
 
 func (s *Spirit) GetID() string             { return s.ID }
@@ -42,20 +42,20 @@ func (s *Spirit) TakeDamage(dmg int)        { s.HP -= dmg }
 func (s *Spirit) GetEquipment() *Equipment  { return s.Inhabiting }
 
 func (s *Spirit) OnHit(user *Spirit, target Damageable, move *Move, damage int) {
-	for _, f := range *s.onHit {
-		(*f)(user, target, move, damage)
+	for _, f := range s.onHit {
+		f(user, target, move, damage)
 	}
 }
 
 func (s *Spirit) OnMiss(user *Spirit, target Damageable, move *Move, damage int) {
-	for _, f := range *s.onMiss {
-		(*f)(user, target, move, damage)
+	for _, f := range s.onMiss {
+		f(user, target, move, damage)
 	}
 }
 
 func (s *Spirit) OnDbl(user *Spirit, target Damageable, move *Move, damage int) {
-	for _, f := range *s.onDbl {
-		(*f)(user, target, move, damage)
+	for _, f := range s.onDbl {
+		f(user, target, move, damage)
 	}
 }
 
