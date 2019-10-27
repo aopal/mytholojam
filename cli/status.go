@@ -4,8 +4,9 @@ import (
 	"encoding/json"
 	"fmt"
 	"io/ioutil"
-	"mytholojam/server/types"
 	"net/http"
+
+	"github.com/aopal/mytholojam/server/types"
 )
 
 func status() {

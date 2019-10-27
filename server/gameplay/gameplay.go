@@ -3,9 +3,10 @@ package gameplay
 import (
 	"fmt"
 	"log"
-	"mytholojam/server/resources"
-	"mytholojam/server/types"
 	"sync"
+
+	"github.com/aopal/mytholojam/server/resources"
+	"github.com/aopal/mytholojam/server/types"
 )
 
 var gameList map[string]*types.Game

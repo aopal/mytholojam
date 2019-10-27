@@ -1,6 +1,6 @@
 package resources
 
-import "mytholojam/server/types"
+import "github.com/aopal/mytholojam/server/types"
 
 var SpiritList map[string]*types.SpiritTemplate = map[string]*types.SpiritTemplate{
 	Warrior.Name: &Warrior,

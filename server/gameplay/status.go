@@ -2,9 +2,10 @@ package gameplay
 
 import (
 	"errors"
-	"mytholojam/server/types"
 	"net/http"
 	"strconv"
+
+	"github.com/aopal/mytholojam/server/types"
 
 	"github.com/gorilla/mux"
 )

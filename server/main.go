@@ -4,12 +4,13 @@ import (
 	"context"
 	"fmt"
 	"log"
-	"mytholojam/server/gameplay"
 	"net/http"
 	"os"
 	"os/signal"
 	"syscall"
 	"time"
+
+	"github.com/aopal/mytholojam/server/gameplay"
 
 	"github.com/gorilla/mux"
 	"gopkg.in/natefinch/lumberjack.v2"

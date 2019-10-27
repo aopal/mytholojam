@@ -1,6 +1,6 @@
 package main
 
-import "mytholojam/server/types"
+import "github.com/aopal/mytholojam/server/types"
 
 func currentToken() string {
 	return tokenList[currentGame]

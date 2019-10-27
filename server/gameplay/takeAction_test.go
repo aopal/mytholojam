@@ -1,9 +1,10 @@
 package gameplay
 
 import (
-	"mytholojam/server/resources"
-	"mytholojam/server/types"
 	"testing"
+
+	"github.com/aopal/mytholojam/server/resources"
+	"github.com/aopal/mytholojam/server/types"
 
 	"gotest.tools/assert"
 )

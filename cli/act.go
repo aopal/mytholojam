@@ -4,10 +4,11 @@ import (
 	"bytes"
 	"encoding/json"
 	"fmt"
-	"mytholojam/server/types"
 	"net/http"
 	"strconv"
 	"strings"
+
+	"github.com/aopal/mytholojam/server/types"
 )
 
 func clearActions() {

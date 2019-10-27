@@ -1,7 +1,7 @@
 package resources
 
 import (
-	"mytholojam/server/types"
+	"github.com/aopal/mytholojam/server/types"
 )
 
 var empty types.CallbackArray = types.CallbackArray{}
