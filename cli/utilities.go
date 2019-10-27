@@ -2,8 +2,9 @@ package main
 
 import (
 	"fmt"
-	"mytholojam/server/types"
 	"strings"
+
+	"github.com/aopal/mytholojam/server/types"
 )
 
 func findEntities(user, move, target string) (*types.Spirit, *types.Move, *types.Equipment, error) {

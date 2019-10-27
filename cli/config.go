@@ -1,8 +1,9 @@
 package main
 
 import (
-	"mytholojam/server/types"
 	"os"
+
+	"github.com/aopal/mytholojam/server/types"
 )
 
 var server string

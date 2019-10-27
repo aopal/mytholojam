@@ -4,7 +4,7 @@ import (
 	"log"
 	"net/http"
 
-	"mytholojam/server/types"
+	"github.com/aopal/mytholojam/server/types"
 
 	"github.com/gorilla/mux"
 )

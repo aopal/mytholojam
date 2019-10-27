@@ -5,9 +5,10 @@ import (
 	"errors"
 	"fmt"
 	"io/ioutil"
-	"mytholojam/server/types"
 	"net/http"
 	"sort"
+
+	"github.com/aopal/mytholojam/server/types"
 
 	"github.com/gorilla/mux"
 )

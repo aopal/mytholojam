@@ -1,4 +1,4 @@
-module mytholojam
+module github.com/aopal/mytholojam
 
 go 1.12
 

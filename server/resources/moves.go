@@ -1,6 +1,6 @@
 package resources
 
-import "mytholojam/server/types"
+import "github.com/aopal/mytholojam/server/types"
 
 var MoveList map[string]*types.Move = map[string]*types.Move{
 	Switch.Name: &Switch,
