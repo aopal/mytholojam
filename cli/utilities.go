@@ -41,6 +41,17 @@ func findEntities(user, move, target string) (*types.Spirit, *types.Move, *types
 		}
 	}
 
+	for _, v := range u.Inhabiting.Moves {
+		if strings.Contains(strings.ToLower(v.Name), strings.ToLower(move)) {
+			if m != nil {
+				m = nil
+				multipleMatches = true
+				break
+			}
+			m = v
+		}
+	}
+
 	if m == nil {
 		return nil, nil, nil, fmt.Errorf("Invalid move, could not find move matching search string " + move + " for user " + u.Name)
 	} else if multipleMatches {

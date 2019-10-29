@@ -12,8 +12,11 @@ type Spirit struct {
 	HP           int              `json:"hp"`
 	MaxHP        int              `json:"maxHP"`
 	ATK          int              `json:"atk"`
+	AtkMod       int              `json:"atkMod"`
 	Defs         map[string]int   `json:"defenses"`
+	DefMods      map[string]int   `json:"defMods"`
 	Speed        int              `json:"speed"`
+	SpeedMod     int              `json:"speedMod"`
 	Moves        map[string]*Move `json:"moves"`
 	Inhabiting   *Equipment       `json:"inhabiting"`
 	InhabitingId string           `json:"inhabitingId"`
@@ -36,10 +39,22 @@ type SpiritTemplate struct {
 
 func (s *Spirit) GetID() string             { return s.ID }
 func (s *Spirit) GetName() string           { return s.Name }
-func (s *Spirit) GetDef(dmgType string) int { return s.Defs[dmgType] }
+func (s *Spirit) GetDef(dmgType string) int { return s.Defs[dmgType] + s.DefMods[dmgType] }
+func (s *Spirit) GetAtk() int               { return s.ATK + s.AtkMod }
+func (s *Spirit) GetSpeed() int             { return s.Speed + s.SpeedMod }
 func (s *Spirit) GetHP() int                { return s.HP }
 func (s *Spirit) TakeDamage(dmg int)        { s.HP -= dmg }
 func (s *Spirit) GetEquipment() *Equipment  { return s.Inhabiting }
+
+func (s *Spirit) GetMove(moveName string) *Move {
+	if m, ok := s.Moves[moveName]; ok {
+		return m
+	} else if m, ok := s.Inhabiting.Moves[moveName]; ok {
+		return m
+	}
+
+	return nil
+}
 
 func (s *Spirit) OnHit(user *Spirit, target Damageable, move *Move, damage int) {
 	for _, f := range s.onHit {
@@ -80,24 +95,31 @@ func (s *Spirit) Inhabit(t Damageable) bool {
 
 func (s *Spirit) MarshalJSON() ([]byte, error) {
 	return json.Marshal(&struct {
-		ID           string           `json:"id"`
-		HP           int              `json:"hp"`
-		Name         string           `json:"name"`
-		MaxHP        int              `json:"maxHP"`
-		ATK          int              `json:"atk"`
-		Defs         map[string]int   `json:"defenses"`
-		Speed        int              `json:"Speed"`
-		Moves        map[string]*Move `json:"moves"`
-		Inhabiting   string           `json:"inhabiting"`
-		InhabitingId string           `json:"inhabitingId"`
+		ID            string           `json:"id"`
+		HP            int              `json:"hp"`
+		Name          string           `json:"name"`
+		MaxHP         int              `json:"maxHP"`
+		ATK           int              `json:"atk"`
+		AtkMod        int              `json:"atkMod"`
+		Defs          map[string]int   `json:"defenses"`
+		DefMods       map[string]int   `json:"defMods"`
+		Speed         int              `json:"speed"`
+		SpeedMod      int              `json:"speedMod"`
+		StatModifiers map[string]int   `json:"statMods"`
+		Moves         map[string]*Move `json:"moves"`
+		Inhabiting    string           `json:"inhabiting"`
+		InhabitingId  string           `json:"inhabitingId"`
 	}{
 		ID:           s.ID,
 		HP:           s.HP,
 		Name:         s.Name,
 		MaxHP:        s.MaxHP,
 		ATK:          s.ATK,
+		AtkMod:       s.AtkMod,
 		Defs:         s.Defs,
+		DefMods:      s.DefMods,
 		Speed:        s.Speed,
+		SpeedMod:     s.SpeedMod,
 		Moves:        s.Moves,
 		InhabitingId: s.Inhabiting.ID,
 	})
@@ -112,6 +134,8 @@ func (st *SpiritTemplate) NewSpirit() *Spirit {
 	s.ATK = st.ATK
 	s.Defs = st.Defs
 	s.Speed = st.Speed
+
+	s.DefMods = make(map[string]int)
 
 	s.onHit = st.OnHit
 	s.onMiss = st.OnMiss

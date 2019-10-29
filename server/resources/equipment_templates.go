@@ -30,7 +30,7 @@ var Sword types.EquipmentTemplate = types.EquipmentTemplate{
 		spiritTypes[2]: lowDEF,
 		spiritTypes[3]: lowDEF,
 	},
-	Moves: []*types.Move{},
+	Moves: map[string]*types.Move{},
 }
 
 var Shield types.EquipmentTemplate = types.EquipmentTemplate{
@@ -47,7 +47,7 @@ var Shield types.EquipmentTemplate = types.EquipmentTemplate{
 		spiritTypes[2]: highDEF,
 		spiritTypes[3]: lowDEF,
 	},
-	Moves: []*types.Move{},
+	Moves: map[string]*types.Move{},
 }
 
 var Bow types.EquipmentTemplate = types.EquipmentTemplate{
@@ -64,7 +64,7 @@ var Bow types.EquipmentTemplate = types.EquipmentTemplate{
 		spiritTypes[2]: lowDEF,
 		spiritTypes[3]: avgDEF,
 	},
-	Moves: []*types.Move{},
+	Moves: map[string]*types.Move{},
 }
 
 // FIRST PASS EQUIPMENT
@@ -82,7 +82,7 @@ var AngloSaxonSpear types.EquipmentTemplate = types.EquipmentTemplate{
 		spiritTypes[2]: avgDEF,
 		spiritTypes[3]: avgDEF,
 	},
-	Moves: []*types.Move{},
+	Moves: map[string]*types.Move{},
 }
 
 var DanishNeedleSet types.EquipmentTemplate = types.EquipmentTemplate{
@@ -99,7 +99,7 @@ var DanishNeedleSet types.EquipmentTemplate = types.EquipmentTemplate{
 		spiritTypes[2]: highDEF,
 		spiritTypes[3]: avgDEF,
 	},
-	Moves: []*types.Move{},
+	Moves: map[string]*types.Move{},
 }
 
 var ArthiRod types.EquipmentTemplate = types.EquipmentTemplate{
@@ -116,7 +116,7 @@ var ArthiRod types.EquipmentTemplate = types.EquipmentTemplate{
 		spiritTypes[2]: midloDEF,
 		spiritTypes[3]: midhiDEF,
 	},
-	Moves: []*types.Move{},
+	Moves: map[string]*types.Move{},
 }
 
 var IberianGoatSkull types.EquipmentTemplate = types.EquipmentTemplate{
@@ -133,7 +133,7 @@ var IberianGoatSkull types.EquipmentTemplate = types.EquipmentTemplate{
 		spiritTypes[2]: highDEF,
 		spiritTypes[3]: lowDEF,
 	},
-	Moves: []*types.Move{},
+	Moves: map[string]*types.Move{},
 }
 
 var AttisCrown types.EquipmentTemplate = types.EquipmentTemplate{
@@ -150,5 +150,5 @@ var AttisCrown types.EquipmentTemplate = types.EquipmentTemplate{
 		spiritTypes[2]: avgDEF,
 		spiritTypes[3]: highDEF,
 	},
-	Moves: []*types.Move{},
+	Moves: map[string]*types.Move{},
 }

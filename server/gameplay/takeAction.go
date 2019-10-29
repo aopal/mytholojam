@@ -98,8 +98,16 @@ func validateSingleAction(g *types.Game, p *types.Player, a *types.Action) (erro
 
 	var teamTargeted map[string]*types.Equipment
 	op := p.Opponent
-	a.User = p.Spirits[a.User.ID]      // ensure client can't submit fake spirit stats
-	a.Move = a.User.Moves[a.Move.Name] // ensure client can't submit fake moves
+	a.User = p.Spirits[a.User.ID]        // ensure client can't submit fake spirit stats
+	a.Move = a.User.GetMove(a.Move.Name) // ensure client can't submit fake moves
+
+	if a.User == nil {
+		return errors.New("No spirit with the given id exists on the player.\n"), 400
+	}
+
+	if a.Move == nil {
+		return errors.New("User doesn't have access to that move.\n"), 400
+	}
 
 	if len(a.Targets) == 0 || (len(a.Targets) > 1 && !a.Move.MultiTarget) {
 		return errors.New("Invalid action2.\n"), 400
@@ -136,8 +144,8 @@ func calculateActionOrder(g *types.Game) {
 
 	sort.Slice(actions, func(i, j int) bool {
 		if actions[i].Move.Priority == actions[j].Move.Priority {
-			iEffSpd := actions[i].User.Speed - actions[i].User.Inhabiting.Weight
-			jEffSpd := actions[j].User.Speed - actions[j].User.Inhabiting.Weight
+			iEffSpd := actions[i].User.GetSpeed() - actions[i].User.Inhabiting.GetWeight()
+			jEffSpd := actions[j].User.GetSpeed() - actions[j].User.Inhabiting.GetWeight()
 			return iEffSpd > jEffSpd
 		} else {
 			return actions[i].Move.Priority > actions[j].Move.Priority
@@ -187,7 +195,7 @@ func applyCallbacks(user *types.Spirit, target types.Damageable, move *types.Mov
 }
 
 func CalculateDamage(user *types.Spirit, target types.Damageable, move *types.Move) int {
-	effAtk := user.ATK + move.Power
+	effAtk := user.GetAtk() + move.Power
 	damage := effAtk - target.GetDef(move.Type)
 
 	if damage < 0 {
