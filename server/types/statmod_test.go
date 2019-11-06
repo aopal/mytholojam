@@ -40,3 +40,31 @@ func TestStatmods(t *testing.T) {
 	assert.Assert(t, s.GetDef("type1") == s.Defs["type1"]+1)
 	assert.Assert(t, s.GetDef("type2") == s.Defs["type2"]-1)
 }
+
+func TestApplyStatMods(t *testing.T) {
+	var s Spirit
+
+	s.ATK = 5
+	s.Speed = 10
+	s.Defs = map[string]int{
+		"STRN": 5,
+		"FLAM": 4,
+		"WEAR": 3,
+		"NAME": 2,
+	}
+
+	statMod := &StatMod{
+		DefMods: map[string]int{
+			"STRN": -1,
+			"FLAM": -1,
+			"WEAR": -1,
+			"NAME": -1,
+		},
+	}
+	s.ApplyStatMod(statMod)
+
+	assert.Assert(t, s.GetDef("STRN") == 4)
+	assert.Assert(t, s.GetDef("FLAM") == 3)
+	assert.Assert(t, s.GetDef("WEAR") == 2)
+	assert.Assert(t, s.GetDef("NAME") == 1)
+}
