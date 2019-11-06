@@ -7,18 +7,18 @@ import (
 )
 
 type Equipment struct {
-	ID            string              `json:"id"`
-	Name          string              `json:"name"`
-	HP            int                 `json:"hp"`
-	MaxHP         int                 `json:"maxHP"`
-	ATK           int                 `json:"atk"`
-	Defs          map[string]int      `json:"defenses"`
-	Weight        int                 `json:"weight"`
-	StatMods      map[string]*StatMod `json:"statMods"`
-	Moves         map[string]*Move    `json:"moves"`
-	Inhabited     bool                `json:"inhabited"`
-	InhabitedBy   *Spirit             `json:"inhabitedBy"`
-	InhabitedById string              `json:"inhabitedById"`
+	ID            string           `json:"id"`
+	Name          string           `json:"name"`
+	HP            int              `json:"hp"`
+	MaxHP         int              `json:"maxHP"`
+	ATK           int              `json:"atk"`
+	Defs          map[string]int   `json:"defenses"`
+	Weight        int              `json:"weight"`
+	StatMods      []*StatMod       `json:"statMods"`
+	Moves         map[string]*Move `json:"moves"`
+	Inhabited     bool             `json:"inhabited"`
+	InhabitedBy   *Spirit          `json:"inhabitedBy"`
+	InhabitedById string           `json:"inhabitedById"`
 	onHit         CallbackArray
 	onMiss        CallbackArray
 	onDbl         CallbackArray
@@ -63,6 +63,10 @@ func (e *Equipment) OnDbl(user *Spirit, target Damageable, move *Move, damage in
 	}
 }
 
+func (e *Equipment) ApplyStatMod(statmod *StatMod) {
+	e.StatMods = append(e.StatMods, statmod)
+}
+
 func (e *Equipment) MarshalJSON() ([]byte, error) {
 	inhabitedById := ""
 	if e.InhabitedBy != nil {
@@ -70,17 +74,17 @@ func (e *Equipment) MarshalJSON() ([]byte, error) {
 	}
 
 	return json.Marshal(&struct {
-		ID            string              `json:"id"`
-		Name          string              `json:"name"`
-		HP            int                 `json:"hp"`
-		MaxHP         int                 `json:"maxHP"`
-		ATK           int                 `json:"atk"`
-		Defs          map[string]int      `json:"defenses"`
-		Weight        int                 `json:"weight"`
-		StatMods      map[string]*StatMod `json:"statMods"`
-		Moves         map[string]*Move    `json:"moves"`
-		Inhabited     bool                `json:"inhabited"`
-		InhabitedById string              `json:"inhabitedBy"`
+		ID            string           `json:"id"`
+		Name          string           `json:"name"`
+		HP            int              `json:"hp"`
+		MaxHP         int              `json:"maxHP"`
+		ATK           int              `json:"atk"`
+		Defs          map[string]int   `json:"defenses"`
+		Weight        int              `json:"weight"`
+		StatMods      []*StatMod       `json:"statMods"`
+		Moves         map[string]*Move `json:"moves"`
+		Inhabited     bool             `json:"inhabited"`
+		InhabitedById string           `json:"inhabitedBy"`
 	}{
 		ID:            e.ID,
 		Name:          e.Name,
@@ -105,7 +109,7 @@ func (et *EquipmentTemplate) NewEquipment() *Equipment {
 	e.Defs = et.Defs
 	e.Weight = et.Weight
 
-	e.StatMods = make(map[string]*StatMod)
+	e.StatMods = make([]*StatMod, 0)
 
 	e.onHit = et.OnHit
 	e.onMiss = et.OnMiss

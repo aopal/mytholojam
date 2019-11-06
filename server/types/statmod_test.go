@@ -16,8 +16,8 @@ func TestStatmods(t *testing.T) {
 		"type2": 2,
 	}
 
-	s.StatMods = map[string]*StatMod{
-		"id1": &StatMod{
+	s.StatMods = []*StatMod{
+		&StatMod{
 			AtkMod:   4,
 			SpeedMod: 3,
 			DefMods: map[string]int{
@@ -25,7 +25,7 @@ func TestStatmods(t *testing.T) {
 				"type2": 0,
 			},
 		},
-		"id2": &StatMod{
+		&StatMod{
 			AtkMod:   -2,
 			SpeedMod: -3,
 			DefMods: map[string]int{
