@@ -20,28 +20,23 @@ var defaultRecoil types.Callback = func(user *types.Spirit, _ types.Damageable, 
 }
 
 var defaultLowerDefenses types.Callback = func(_ *types.Spirit, target types.Damageable, _ *types.Move, _ int) {
-	statMod := &types.StatMod{
-		DefMods: map[string]int{
-			spiritTypes[0]: -1,
-			spiritTypes[1]: -1,
-			spiritTypes[2]: -1,
-			spiritTypes[3]: -1,
-		},
-	}
+	statMod := types.NewStatMod()
+	statMod.DefMods[spiritTypes[0]] = -1
+	statMod.DefMods[spiritTypes[1]] = -1
+	statMod.DefMods[spiritTypes[2]] = -1
+	statMod.DefMods[spiritTypes[3]] = -1
 	target.ApplyStatMod(statMod)
 }
 
 var defaultLowerAtk types.Callback = func(_ *types.Spirit, target types.Damageable, _ *types.Move, _ int) {
-	statMod := &types.StatMod{
-		AtkMod: -1,
-	}
+	statMod := types.NewStatMod()
+	statMod.AtkMod = -1
 	target.ApplyStatMod(statMod)
 }
 
 var defaultLowerSpeed types.Callback = func(_ *types.Spirit, target types.Damageable, _ *types.Move, _ int) {
-	statMod := &types.StatMod{
-		SpeedMod:  -1,
-		WeightMod: -1,
-	}
+	statMod := types.NewStatMod()
+	statMod.SpeedMod = -1
+	statMod.WeightMod = -1
 	target.ApplyStatMod(statMod)
 }

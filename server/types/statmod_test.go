@@ -16,8 +16,8 @@ func TestStatmods(t *testing.T) {
 		"type2": 2,
 	}
 
-	s.StatMods = []*StatMod{
-		&StatMod{
+	s.StatMods = map[string]*StatMod{
+		"id1": &StatMod{
 			AtkMod:   4,
 			SpeedMod: 3,
 			DefMods: map[string]int{
@@ -25,7 +25,7 @@ func TestStatmods(t *testing.T) {
 				"type2": 0,
 			},
 		},
-		&StatMod{
+		"id2": &StatMod{
 			AtkMod:   -2,
 			SpeedMod: -3,
 			DefMods: map[string]int{
@@ -44,8 +44,7 @@ func TestStatmods(t *testing.T) {
 func TestApplyStatMods(t *testing.T) {
 	var s Spirit
 
-	s.ATK = 5
-	s.Speed = 10
+	s.StatMods = make(map[string]*StatMod)
 	s.Defs = map[string]int{
 		"STRN": 5,
 		"FLAM": 4,
