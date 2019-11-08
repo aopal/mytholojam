@@ -1,6 +1,8 @@
 package types
 
 import (
+	"log"
+
 	"github.com/google/uuid"
 )
 
@@ -47,9 +49,10 @@ func cumDefMod(mods map[string]*StatMod, defType string) int {
 func NewStatMod() *StatMod {
 	statmod := new(StatMod)
 	statModID, err := uuid.NewRandom()
-	if err == nil {
-		statmod.ID = statModID.String()
-		return statmod
+	if err != nil {
+		log.Fatal(err)
+		return nil
 	}
-	return nil
+	statmod.ID = statModID.String()
+	return statmod
 }
