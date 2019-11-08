@@ -68,10 +68,8 @@ var Flame types.SpiritTemplate = types.SpiritTemplate{
 		spiritTypes[3]: lowDEF,
 	},
 	Moves: map[string]*types.Move{
-		Switch.Name: &Switch,
-		Strong.Name: &Strong,
-		Weak.Name:   &Weak,
-		Fast.Name:   &Fast,
+		Switch.Name:     &Switch,
+		Incinerate.Name: &Incinerate,
 	},
 }
 
