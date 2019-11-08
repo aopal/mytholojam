@@ -160,3 +160,24 @@ var Needle types.Move = types.Move{
 		doDamage,
 	},
 }
+
+var Incinerate types.Move = types.Move{
+	Name:           "Incinerate",
+	Power:          highPWR,
+	Type:           spiritTypes[1],
+	Priority:       avgPri,
+	MultiTarget:    false,
+	TeamTargetable: opTarget,
+	OnHitFuncs: types.CallbackArray{
+		defaultRecoilEquipment,
+		lowerFlam,
+	},
+	OnMissFuncs: types.CallbackArray{
+		defaultRecoil,
+		defaultRecoilEquipment,
+	},
+	OnDblFuncs: types.CallbackArray{
+		doDamage,
+		doDamage,
+	},
+}
