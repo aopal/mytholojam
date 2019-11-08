@@ -64,7 +64,7 @@ var Fast types.Move = types.Move{
 }
 
 var StatChange types.Move = types.Move{
-	Name:           "StatChange",
+	Name:           "Lower Defs",
 	Power:          avgPWR,
 	Type:           spiritTypes[2],
 	Priority:       avgPri,
@@ -77,5 +77,107 @@ var StatChange types.Move = types.Move{
 	OnDblFuncs: types.CallbackArray{
 		defaultLowerDefenses,
 		defaultLowerDefenses,
+	},
+}
+
+// DESIGN FIRST PASS MOVES
+
+var SpearThrust types.Move = types.Move{
+	Name:           "Thrust",
+	Power:          avgPWR,
+	Type:           spiritTypes[0],
+	Priority:       avgPri,
+	MultiTarget:    false,
+	TeamTargetable: opTarget,
+	OnHitFuncs: types.CallbackArray{
+		doDamage,
+	},
+	OnMissFuncs: types.CallbackArray{
+		defaultRecoilEquipment,
+	},
+	OnDblFuncs: types.CallbackArray{
+		doDamage, // TODO: PIERCE to attack equipment inhabitated/target behind
+	},
+}
+
+var RodCrush types.Move = types.Move{
+	Name:           "Crush",
+	Power:          highPWR,
+	Type:           spiritTypes[0],
+	Priority:       lowPri,
+	MultiTarget:    false,
+	TeamTargetable: opTarget,
+	OnHitFuncs: types.CallbackArray{
+		lowerSelfEquipmentStrn,
+		lowerSelfEquipmentWear,
+	},
+	OnMissFuncs: types.CallbackArray{
+		lowerName,
+		lowerFlam,
+	},
+	OnDblFuncs: types.CallbackArray{
+		doDamage,
+		lowerName,
+		lowerFlam,
+	},
+}
+
+var Cremate types.Move = types.Move{
+	Name:           "Cremate",
+	Power:          midloPWR,
+	Type:           spiritTypes[1], // TODO: Ability to target min or max of 2 defenses
+	Priority:       avgPri,
+	MultiTarget:    false,
+	TeamTargetable: opTarget,
+	OnHitFuncs: types.CallbackArray{ // TODO: Recoil not on a "miss" vs. target but as a general-case/targetless callback after use
+		defaultRecoilEquipment,
+		lowerWear,
+		lowerName,
+	},
+	OnMissFuncs: types.CallbackArray{
+		defaultRecoilEquipment,
+	},
+	OnDblFuncs: types.CallbackArray{
+		defaultRecoilEquipment,
+		doDamage,
+		lowerWear,
+		lowerName,
+	},
+}
+
+var Needle types.Move = types.Move{
+	Name:           "Needle",
+	Power:          lowPWR, // TODO: Power multiplicative by squares of target hit
+	Type:           spiritTypes[2],
+	Priority:       avgPri,
+	MultiTarget:    false,
+	TeamTargetable: opTarget,
+	OnHitFuncs: types.CallbackArray{
+		doDamage,
+	},
+	OnMissFuncs: empty,
+	OnDblFuncs: types.CallbackArray{
+		doDamage,
+	},
+}
+
+var Incinerate types.Move = types.Move{
+	Name:           "Incinerate",
+	Power:          highPWR,
+	Type:           spiritTypes[1],
+	Priority:       avgPri,
+	MultiTarget:    false,
+	TeamTargetable: opTarget,
+	OnHitFuncs: types.CallbackArray{
+		defaultRecoilEquipment,
+		lowerFlam,
+	},
+	OnMissFuncs: types.CallbackArray{
+		defaultRecoil,
+		defaultRecoilEquipment,
+	},
+	OnDblFuncs: types.CallbackArray{
+		doDamage,
+		doDamage,
 	},
 }

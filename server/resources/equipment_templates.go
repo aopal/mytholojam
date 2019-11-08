@@ -82,7 +82,9 @@ var AngloSaxonSpear types.EquipmentTemplate = types.EquipmentTemplate{
 		spiritTypes[2]: avgDEF,
 		spiritTypes[3]: avgDEF,
 	},
-	Moves: map[string]*types.Move{},
+	Moves: map[string]*types.Move{
+		SpearThrust.Name: &SpearThrust,
+	},
 }
 
 var DanishNeedleSet types.EquipmentTemplate = types.EquipmentTemplate{
@@ -99,7 +101,9 @@ var DanishNeedleSet types.EquipmentTemplate = types.EquipmentTemplate{
 		spiritTypes[2]: highDEF,
 		spiritTypes[3]: avgDEF,
 	},
-	Moves: map[string]*types.Move{},
+	Moves: map[string]*types.Move{
+		Needle.Name: &Needle,
+	},
 }
 
 var ArthiRod types.EquipmentTemplate = types.EquipmentTemplate{
@@ -116,7 +120,10 @@ var ArthiRod types.EquipmentTemplate = types.EquipmentTemplate{
 		spiritTypes[2]: midloDEF,
 		spiritTypes[3]: midhiDEF,
 	},
-	Moves: map[string]*types.Move{},
+	Moves: map[string]*types.Move{
+		RodCrush.Name: &RodCrush,
+		Cremate.Name:  &Cremate,
+	},
 }
 
 var IberianGoatSkull types.EquipmentTemplate = types.EquipmentTemplate{
@@ -133,7 +140,9 @@ var IberianGoatSkull types.EquipmentTemplate = types.EquipmentTemplate{
 		spiritTypes[2]: highDEF,
 		spiritTypes[3]: lowDEF,
 	},
-	Moves: map[string]*types.Move{},
+	Moves: map[string]*types.Move{
+		Cremate.Name: &Cremate,
+	},
 }
 
 var AttisCrown types.EquipmentTemplate = types.EquipmentTemplate{
