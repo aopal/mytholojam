@@ -63,6 +63,10 @@ func (e *Equipment) OnDbl(user *Spirit, target Damageable, move *Move, damage in
 	}
 }
 
+func (e *Equipment) ApplyStatMod(statmod *StatMod) {
+	e.StatMods[statmod.ID] = statmod
+}
+
 func (e *Equipment) MarshalJSON() ([]byte, error) {
 	inhabitedById := ""
 	if e.InhabitedBy != nil {

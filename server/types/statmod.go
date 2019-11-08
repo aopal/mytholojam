@@ -1,5 +1,11 @@
 package types
 
+import (
+	"log"
+
+	"github.com/google/uuid"
+)
+
 type StatMod struct {
 	ID        string
 	AtkMod    int
@@ -38,4 +44,15 @@ func cumDefMod(mods map[string]*StatMod, defType string) int {
 	return collect(mods, func(s *StatMod, i int) int {
 		return s.DefMods[defType] + i
 	})
+}
+
+func NewStatMod() *StatMod {
+	statmod := new(StatMod)
+	statModID, err := uuid.NewRandom()
+	if err != nil {
+		log.Fatal(err)
+		return nil
+	}
+	statmod.ID = statModID.String()
+	return statmod
 }

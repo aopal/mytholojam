@@ -72,6 +72,10 @@ func (s *Spirit) OnDbl(user *Spirit, target Damageable, move *Move, damage int) 
 	}
 }
 
+func (s *Spirit) ApplyStatMod(statmod *StatMod) {
+	s.StatMods[statmod.ID] = statmod
+}
+
 func (s *Spirit) Inhabit(t Damageable) bool {
 	e := t.GetEquipment()
 

@@ -62,3 +62,20 @@ var Fast types.Move = types.Move{
 	OnMissFuncs:    empty,
 	OnDblFuncs:     empty,
 }
+
+var StatChange types.Move = types.Move{
+	Name:           "StatChange",
+	Power:          avgPWR,
+	Type:           spiritTypes[2],
+	Priority:       avgPri,
+	MultiTarget:    false,
+	TeamTargetable: opTarget,
+	OnHitFuncs: types.CallbackArray{
+		defaultLowerDefenses,
+	},
+	OnMissFuncs: empty,
+	OnDblFuncs: types.CallbackArray{
+		defaultLowerDefenses,
+		defaultLowerDefenses,
+	},
+}

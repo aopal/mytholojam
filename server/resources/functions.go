@@ -18,3 +18,25 @@ var defaultOnHit types.Callback = func(_ *types.Spirit, target types.Damageable,
 var defaultRecoil types.Callback = func(user *types.Spirit, _ types.Damageable, _ *types.Move, _ int) {
 	user.TakeDamage(RecoilDamage)
 }
+
+var defaultLowerDefenses types.Callback = func(_ *types.Spirit, target types.Damageable, _ *types.Move, _ int) {
+	statMod := types.NewStatMod()
+	statMod.DefMods[spiritTypes[0]] = -1
+	statMod.DefMods[spiritTypes[1]] = -1
+	statMod.DefMods[spiritTypes[2]] = -1
+	statMod.DefMods[spiritTypes[3]] = -1
+	target.ApplyStatMod(statMod)
+}
+
+var defaultLowerAtk types.Callback = func(_ *types.Spirit, target types.Damageable, _ *types.Move, _ int) {
+	statMod := types.NewStatMod()
+	statMod.AtkMod = -1
+	target.ApplyStatMod(statMod)
+}
+
+var defaultLowerSpeed types.Callback = func(_ *types.Spirit, target types.Damageable, _ *types.Move, _ int) {
+	statMod := types.NewStatMod()
+	statMod.SpeedMod = -1
+	statMod.WeightMod = -1
+	target.ApplyStatMod(statMod)
+}
