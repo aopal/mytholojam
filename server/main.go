@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"log"
 	"net/http"
+	"io"
 	"os"
 	"os/signal"
 	"syscall"
@@ -21,15 +22,29 @@ func defaultHandler(w http.ResponseWriter, r *http.Request) {
 	w.Write([]byte(""))
 }
 
+// func webClientHandler(w http.ResponseWriter, r *http.Request) {
+// 	log.Printf("Serving web client")
+
+// 	index, _ := os.Open("./web/index.html")
+
+// 	io.Copy(w, index)
+// }
+
+// func logRoutes(route *mux.Route, router *mux.Router, ancestors []*mux.Route) error {
+// 	log.Printf("%s %s\n\n", route, router)
+// 	return nil
+// }
+
 func main() {
 	// Create Server and Route Handlers
-	r := mux.NewRouter()
+	r := mux.NewRouter().StrictSlash(true)
 
 	r.HandleFunc("/", defaultHandler)
 	r.HandleFunc("/create-game/{gameID}", gameplay.CreateHandler)
 	r.HandleFunc("/join-game/{gameID}", gameplay.JoinHandler)
 	r.HandleFunc("/status/{gameID}/{actionCounter:[0-9]+}", gameplay.StatusHandler)
 	r.HandleFunc("/take-action/{gameID}", gameplay.ActionHandler)
+	r.PathPrefix("/play/").Handler(http.StripPrefix("/play/", http.FileServer(http.Dir("./web"))))
 
 	gameplay.Init()
 
