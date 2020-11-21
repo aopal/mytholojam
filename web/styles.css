@@ -58,3 +58,17 @@
 
 }
 
+.currentlySelectable {
+    border-radius: 3px;
+    border: 3px dashed green;
+}
+
+.move {
+    font-size: 10pt;
+    padding-top: 0!important;
+    padding-bottom: 0!important;
+}
+
+#status > h4 {
+    width: 100%;
+}

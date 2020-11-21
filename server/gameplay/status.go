@@ -25,7 +25,7 @@ func StatusHandler(w http.ResponseWriter, r *http.Request) {
 	g.Lock.RLock()
 	defer g.Lock.RUnlock()
 
-	print(g, "Status request received")
+	// print(g, "Status request received")
 
 	status, err, code := getStatus(g, numActionsSeen)
 
@@ -40,6 +40,8 @@ func StatusHandler(w http.ResponseWriter, r *http.Request) {
 func getStatus(g *types.Game, numActionsSeen int) (string, error, int) {
 	if numActionsSeen > g.NumActions {
 		return "", errors.New("Invalid number of actions seen.\n"), 400
+	} else if numActionsSeen == g.NumActions && numActionsSeen != 0 {
+		return "", errors.New("Content not modified\n"), 304
 	}
 
 	status, err := g.ToJSON(numActionsSeen)

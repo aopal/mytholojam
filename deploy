@@ -1,0 +1,11 @@
+#!/bin/bash
+
+host="root@104-225-143-143.cloud-xip.io"
+
+set -ex
+
+GOOS=linux; go build -o bin/mytholojam-linux ./server
+scp bin/mytholojam-linux $host:~/bin/mytholojam/tmp
+scp -r web $host:~/bin/mytholojam
+# ssh $host '~/restart-mytholojam'
+ssh $host

@@ -16,7 +16,7 @@
 				<input id="game-id" type="text" class="">
 				<a id="join-game" class="btn btn-primary" onclick="newGame('join')">Join</a>
 				<a id="create-game" class="btn btn-success" onclick="newGame('create')">Create</a>
-				<a id="create-game" class="btn btn-secondary" onclick="newGame('join')">Watch</a>
+				<a id="create-game" class="btn btn-secondary" onclick="watchGame()">Watch</a>
 			</div>
 		</div>
 	</div>
@@ -37,10 +37,15 @@
 			<div class="col-3">
 				<div id="control-col">
 					<!-- <h2>Turn History</h2> -->
-					<div id="history" class="row">
+					<div id="history" class="row h-75">
+						Game has not started yet
 					</div>
 					<!-- <h2>Controls</h2> -->
-					<div id="controls" class="row">
+					<div id="status" class="row">
+						<h4>Current Status</h4><br>
+						<div>
+							<p id="status-text">Waiting for players to join...</p>
+						</div>
 					</div>
 				</div>
 			</div>

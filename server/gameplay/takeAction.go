@@ -32,10 +32,14 @@ func ActionHandler(w http.ResponseWriter, r *http.Request) {
 	b, _ := ioutil.ReadAll(r.Body)
 	defer r.Body.Close()
 
+	// fmt.Println(string(b))
+
 	var payload types.ActionPayload
 	json.Unmarshal(b, &payload)
 
 	err, code := takeAction(g, &payload)
+
+	fmt.Println("returning", err, code)
 
 	if err != nil {
 		w.WriteHeader(code)
